@@ -1,0 +1,12 @@
+{
+  "name": "hydro-typing",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "https://github.com/key8888/hydro-typing.git",
+  "author": "shisei",
+  "license": "MIT",
+  "devDependencies": {
+    "hydrooj": "^5.0.0-beta.9"
+  },
+  "type": "module"
+}
