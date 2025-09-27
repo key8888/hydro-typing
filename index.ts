@@ -6,10 +6,13 @@
 // - param, Types: APIの入力パラメータを定義するデコレータ
 // - PRIV: ユーザー権限
 import {
-    _, Context, DiscussionNotFoundError, DocumentModel, Filter,
-    Handler, NumberKeys, ObjectId, OplogModel,
+    _, Context, DiscussionNotFoundError, DocumentModel, 
+    Handler, ObjectId, OplogModel,
     param, PRIV, Types, UserModel,
 } from 'hydrooj';
+
+import type { Filter, NumberKeys } from 'hydrooj';
+import type { UpdateFilter } from 'mongodb';
 
 // 定数として「ブログの種類番号」を定義（70番をブログに割り当てる）
 export const TYPE_BLOG = 70 as const;
@@ -48,7 +51,7 @@ export class BlogModel {
             content,
             owner,
             title,
-            ip,
+            ...(ip ? { ip } : {}),
             nReply: 0,
             updateAt: new Date(),
             views: 0,
@@ -117,7 +120,7 @@ export class BlogModel {
     }
 
     // ステータスをセットする
-    static setStatus(did: ObjectId, uid: number, $set) {
+    static setStatus(did: ObjectId, uid: number, $set: UpdateFilter<any>['$set']) {
         return DocumentModel.setStatus('system', TYPE_BLOG, did, uid, $set);
     }
 }
