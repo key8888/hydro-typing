@@ -1,0 +1,101 @@
+{% extends "layout/basic.html" %}
+{% block content %}
+<div class="row">
+  <div class="medium-12 columns">
+    <div class="section">
+      <div class="section__header">
+        <h1 class="section__title">{{ _('Typing Practice') }}</h1>
+      </div>
+      <div class="section__body" style="text-align:center; font-size:2rem; font-family:monospace;">
+        <div id="word-display"></div>
+        <p>スコア: <span id="score">0</span></p>
+        <div id="end-screen" style="display:none; margin-top:20px;">
+          <h2>タイピング終了！</h2>
+          <p>あなたのスコア: <span id="final-score"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const words = {{ words | safe }};
+  let currentWordIndex = 0;
+  let currentCharIndex = 0;
+  let score = 0;
+  let isWaitingNext = false;
+
+  const wordDisplay = document.getElementById('word-display');
+  const scoreEl = document.getElementById('score');
+  const endScreen = document.getElementById('end-screen');
+  const finalScore = document.getElementById('final-score');
+
+  function renderWord() {
+    const word = words[currentWordIndex];
+    let html = '';
+    for (let i = 0; i < word.length; i++) {
+      if (i < currentCharIndex) {
+        html += `<span style="color:green">${word[i]}</span>`;
+      } else {
+        html += `<span style="color:black">${word[i]}</span>`;
+      }
+    }
+    wordDisplay.innerHTML = html;
+  }
+
+  function showEndScreen() {
+    wordDisplay.style.display = 'none';
+    endScreen.style.display = 'block';
+    finalScore.textContent = score;
+  }
+
+  function nextWord() {
+    currentWordIndex++;
+    currentCharIndex = 0;
+    isWaitingNext = false;
+    if (currentWordIndex >= words.length) {
+      showEndScreen();
+    } else {
+      renderWord();
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (isWaitingNext) return; // 次の単語待ちのときは無視
+
+    const word = words[currentWordIndex];
+    const expected = word[currentCharIndex];
+    if (!expected) return;
+
+    if (e.key === expected) {
+      // 正解
+      currentCharIndex++;
+      score++;
+      scoreEl.textContent = score;
+      renderWord();
+
+      if (currentCharIndex === word.length) {
+        // 単語終わり → 1秒後に次へ
+        isWaitingNext = true;
+        setTimeout(nextWord, 1000);
+      }
+    } else {
+      // ミス → 赤表示に差し替え
+      let html = '';
+      for (let i = 0; i < word.length; i++) {
+        if (i < currentCharIndex) {
+          html += `<span style="color:green">${word[i]}</span>`;
+        } else if (i === currentCharIndex) {
+          html += `<span style="color:red">${word[i]}</span>`;
+        } else {
+          html += `<span style="color:black">${word[i]}</span>`;
+        }
+      }
+      wordDisplay.innerHTML = html;
+    }
+  });
+
+  // 初期表示
+  renderWord();
+</script>
+{% endblock %}

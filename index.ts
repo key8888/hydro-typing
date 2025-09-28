@@ -250,12 +250,26 @@ class BlogEditHandler extends BlogHandler {
     }
 }
 
+// タイピングページ
+class TypingHandler extends Handler {
+    async get() {
+        const words = ['apple', 'banana', 'cherry', 'orange', 'grape'];
+        this.response.template = 'typing.html';
+        this.response.body = {
+            words: JSON.stringify(words),  // ここで文字列化しておく
+        };
+    }
+}
+
+
 // この apply 関数でルートやUIを設定する
 export async function apply(ctx: Context) {
     ctx.Route('blog_main', '/blog/:uid', BlogUserHandler);
     ctx.Route('blog_create', '/blog/:uid/create', BlogEditHandler, PRIV.PRIV_USER_PROFILE);
     ctx.Route('blog_detail', '/blog/:uid/:did', BlogDetailHandler);
     ctx.Route('blog_edit', '/blog/:uid/:did/edit', BlogEditHandler, PRIV.PRIV_USER_PROFILE);
+
+    ctx.Route('typing_main', '/typing', TypingHandler, PRIV.PRIV_USER_PROFILE);
 
     // ユーザーのドロップダウンに「Blog」メニューを追加
     ctx.injectUI('UserDropdown', 'blog_main', (h) => ({
