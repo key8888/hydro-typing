@@ -282,7 +282,14 @@ interface TypingScore {
 class TypingHandler extends Handler {
     async get() {
         // 単語リストはJSONから読み込み（前に説明した方法）
-        const words = ["apple","banana","cherry","orange","grape"];
+        // const words = ["apple","banana","cherry","orange","grape"];
+
+        // JSONファイルのパスを組み立てる
+        const filePath = join(__dirname, 'typing_words', 'words_basic.json');
+
+        // ファイルを読み込んでパース
+        const raw = readFileSync(filePath, 'utf-8');
+        const words: string[] = JSON.parse(raw);
 
         // ユーザーID（ログイン必須にしたい場合）
         const uid = this.user?._id || 0;
