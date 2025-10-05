@@ -6,13 +6,16 @@
 // - param, Types: APIの入力パラメータを定義するデコレータ
 // - PRIV: ユーザー権限
 import {
-    _, Context, DiscussionNotFoundError, DocumentModel, 
+    _, Context,db, DiscussionNotFoundError, DocumentModel,
     Handler, ObjectId, OplogModel,
     param, PRIV, Types, UserModel,
 } from 'hydrooj';
+import { readFileSync } from 'fs'
+import { join } from 'path';
 
 import type { Filter, NumberKeys } from 'hydrooj';
 import type { UpdateFilter } from 'mongodb';
+
 
 // 定数として「ブログの種類番号」を定義（70番をブログに割り当てる）
 export const TYPE_BLOG = 70 as const;
@@ -196,14 +199,14 @@ class BlogDetailHandler extends BlogHandler {
 
     // スターをつける
     @param('did', Types.ObjectId)
-    async postStar({}, did: ObjectId) {
+    async postStar({ }, did: ObjectId) {
         await BlogModel.setStar(did, this.user._id, true);
         this.back({ star: true });
     }
 
     // スターを外す
     @param('did', Types.ObjectId)
-    async postUnstar({}, did: ObjectId) {
+    async postUnstar({ }, did: ObjectId) {
         await BlogModel.setStar(did, this.user._id, false);
         this.back({ star: false });
     }
@@ -218,7 +221,7 @@ class BlogEditHandler extends BlogHandler {
 
     @param('title', Types.Title)
     @param('content', Types.Content)
-    async postCreate({}, title: string, content: string) {
+    async postCreate({ }, title: string, content: string) {
         await this.limitRate('add_blog', 3600, 60); // 1時間に60件まで
         const did = await BlogModel.add(this.user._id, title, content, this.request.ip);
         this.response.body = { did };
@@ -228,7 +231,7 @@ class BlogEditHandler extends BlogHandler {
     @param('did', Types.ObjectId)
     @param('title', Types.Title)
     @param('content', Types.Content)
-    async postUpdate({}, did: ObjectId, title: string, content: string) {
+    async postUpdate({ }, did: ObjectId, title: string, content: string) {
         // 自分の記事じゃなければ管理権限チェック
         if (!this.user.own(this.ddoc!)) this.checkPriv(PRIV.PRIV_EDIT_SYSTEM);
         await Promise.all([
@@ -240,7 +243,7 @@ class BlogEditHandler extends BlogHandler {
     }
 
     @param('did', Types.ObjectId)
-    async postDelete({}, did: ObjectId) {
+    async postDelete({ }, did: ObjectId) {
         if (!this.user.own(this.ddoc!)) this.checkPriv(PRIV.PRIV_EDIT_SYSTEM);
         await Promise.all([
             BlogModel.del(did),
@@ -250,17 +253,65 @@ class BlogEditHandler extends BlogHandler {
     }
 }
 
-// タイピングページ
-class TypingHandler extends Handler {
-    async get() {
-        const words = ['apple', 'banana', 'cherry', 'orange', 'grape'];
-        this.response.template = 'typing.html';
-        this.response.body = {
-            words: JSON.stringify(words),  // ここで文字列化しておく
-        };
-    }
+// // タイピングページ
+// class TypingHandler extends Handler {
+//     async get() {
+//         // JSONファイルのパスを組み立てる
+//         const filePath = join(__dirname, 'typing_words', 'words_basic.json');
+
+//         // ファイルを読み込んでパース
+//         const raw = readFileSync(filePath, 'utf-8');
+//         const words: string[] = JSON.parse(raw);
+
+//         this.response.template = 'typing.html';
+//         this.response.body = {
+//             // JS 側でそのまま配列に使えるように文字列化して渡す
+//             words: JSON.stringify(words),
+//         };
+
+
+//     };
+// }
+interface TypingScore {
+    _id?: ObjectId;
+    uid: number;
+    score: number;
+    createdAt: Date;
 }
 
+class TypingHandler extends Handler {
+    async get() {
+        // 単語リストはJSONから読み込み（前に説明した方法）
+        const words = ["apple","banana","cherry","orange","grape"];
+
+        // ユーザーID（ログイン必須にしたい場合）
+        const uid = this.user?._id || 0;
+
+        // DBから履歴を最新10件取る
+        const coll = this.ctx.db.collection<TypingScore>('typingScores');
+        const history = await coll.find({ uid }).sort({ createdAt: -1 }).limit(10).toArray();
+
+        this.response.template = 'typing.html';
+        this.response.body = {
+            words: JSON.stringify(words),
+            history,
+        };
+    }
+
+    async post() {
+        const { score } = this.request.body;
+        const uid = this.user?._id || 0;
+
+        const coll = this.ctx.db.collection<TypingScore>('typingScores');
+        await coll.insertOne({
+            uid,
+            score: Number(score),
+            createdAt: new Date(),
+        });
+
+        this.response.redirect = this.url('typing_main');
+    }
+}
 
 // この apply 関数でルートやUIを設定する
 export async function apply(ctx: Context) {

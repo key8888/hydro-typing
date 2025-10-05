@@ -12,7 +12,35 @@
         <div id="end-screen" style="display:none; margin-top:20px;">
           <h2>タイピング終了！</h2>
           <p>あなたのスコア: <span id="final-score"></span></p>
+          <form id="score-form" method="post" action="/typing">
+            <input type="hidden" name="score" id="score-input">
+            <button type="submit" class="rounded primary button">スコアを保存</button>
+          </form>
         </div>
+      </div>
+    </div>
+
+    <!-- 履歴表示 -->
+    <div class="section">
+      <div class="section__header">
+        <h2 class="section__title">履歴</h2>
+      </div>
+      <div class="section__body">
+        <table class="table">
+          <thead>
+            <tr><th>日付</th><th>スコア</th></tr>
+          </thead>
+          <tbody>
+            {% for h in history %}
+            <tr>
+              <td>{{ h.createdAt }}</td>
+              <td>{{ h.score }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="2">まだ履歴がありません</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -29,6 +57,7 @@
   const scoreEl = document.getElementById('score');
   const endScreen = document.getElementById('end-screen');
   const finalScore = document.getElementById('final-score');
+  const scoreInput = document.getElementById('score-input');
 
   function renderWord() {
     const word = words[currentWordIndex];
@@ -47,6 +76,7 @@
     wordDisplay.style.display = 'none';
     endScreen.style.display = 'block';
     finalScore.textContent = score;
+    scoreInput.value = score; // フォームにセット
   }
 
   function nextWord() {
@@ -61,26 +91,21 @@
   }
 
   document.addEventListener('keydown', (e) => {
-    if (isWaitingNext) return; // 次の単語待ちのときは無視
-
+    if (isWaitingNext) return;
     const word = words[currentWordIndex];
     const expected = word[currentCharIndex];
     if (!expected) return;
-
     if (e.key === expected) {
-      // 正解
       currentCharIndex++;
       score++;
       scoreEl.textContent = score;
       renderWord();
-
       if (currentCharIndex === word.length) {
-        // 単語終わり → 1秒後に次へ
         isWaitingNext = true;
         setTimeout(nextWord, 1000);
       }
     } else {
-      // ミス → 赤表示に差し替え
+      // ミス表示
       let html = '';
       for (let i = 0; i < word.length; i++) {
         if (i < currentCharIndex) {
@@ -95,7 +120,6 @@
     }
   });
 
-  // 初期表示
   renderWord();
 </script>
 {% endblock %}
