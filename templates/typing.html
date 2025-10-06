@@ -1,125 +1,276 @@
 {% extends "layout/basic.html" %}
 {% block content %}
+<style>
+  /* ===== タイピング画面のスタイル ===== */
+  .typing-wrap {
+    position: relative;
+    text-align: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+  .typing-hud {
+    position: absolute;
+    left: 0.5rem;
+    top: -0.25rem;
+    font-size: .9rem;
+    color: #666;
+    user-select: none;
+  }
+  .typing-word {
+    display: inline-block;
+    font-size: 2.2rem;
+    letter-spacing: .05em;
+    line-height: 1.6;
+    margin: 1.25rem 0 0.5rem;
+  }
+  .char { padding: 0 .02em; border-radius: .25rem; }
+  .char--todo     { color: #222; opacity: .6; }
+  .char--correct  { color: #15803d; }         /* green-700 */
+  .char--wrong    { color: #b91c1c; }         /* red-700  */
+  .char--current  { text-decoration: underline; text-underline-offset: .2em; }
+
+  .typing-end {
+    display: none;
+    margin-top: 1.25rem;
+  }
+  .typing-end__score {
+    font-size: 2rem; font-weight: 700; margin: .25rem 0 1rem;
+  }
+
+  /* ===== 履歴テーブルのスタイル（見やすさ重視） ===== */
+  .history-card {
+    margin-top: 2rem;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;          /* gray-200 */
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  .history-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .9rem 1rem;
+    background: linear-gradient(180deg, #fafafa, #f5f5f5);
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .history-title { font-size: 1.05rem; font-weight: 600; color: #111827; margin: 0; }
+  .history-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .history-table thead th {
+    text-align: left;
+    font-size: .9rem;
+    color: #6b7280;                      /* gray-500 */
+    font-weight: 600;
+    padding: .7rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fff;
+    position: sticky; top: 0;
+  }
+  .history-table tbody tr:nth-child(odd)  { background: #fcfcfd; }
+  .history-table tbody tr:nth-child(even) { background: #ffffff; }
+  .history-table td {
+    padding: .75rem 1rem;
+    font-size: .95rem;
+    color: #111827;
+  }
+  .history-empty {
+    padding: 1rem; color: #6b7280; text-align: center;
+  }
+
+  /* 基本のセクション余白微調整 */
+  .section__header { margin-bottom: .25rem; }
+</style>
+
 <div class="row">
   <div class="medium-12 columns">
+    <!-- タイピング本体 -->
     <div class="section">
       <div class="section__header">
         <h1 class="section__title">{{ _('Typing Practice') }}</h1>
       </div>
-      <div class="section__body" style="text-align:center; font-size:2rem; font-family:monospace;">
-        <div id="word-display"></div>
-        <p>スコア: <span id="score">0</span></p>
-        <div id="end-screen" style="display:none; margin-top:20px;">
-          <h2>タイピング終了！</h2>
-          <p>あなたのスコア: <span id="final-score"></span></p>
-          <form id="score-form" method="post" action="/typing">
+
+      <div class="section__body typing-wrap">
+        <!-- 残り単語数 HUD -->
+        <div id="hud-remaining" class="typing-hud">Left: - / -</div>
+
+        <!-- 単語表示 -->
+        <div id="word-display" class="typing-word"></div>
+
+        <!-- 終了画面（WPM表示＆保存フォーム） -->
+        <div id="end-screen" class="typing-end">
+          <h2 class="section__title" style="margin-bottom:.25rem;">{{ _('Finished!') }}</h2>
+          <div class="typing-end__score">
+            WPM: <span id="final-wpm">0</span>
+          </div>
+          <form id="score-form" method="post" action="/typing" style="margin-top:.5rem;">
             <input type="hidden" name="score" id="score-input">
-            <button type="submit" class="rounded primary button">スコアを保存</button>
+            <button type="submit" class="rounded primary button">{{ _('Save score') }}</button>
           </form>
+          <div style="margin-top:.5rem; color:#6b7280; font-size:.9rem;">
+            <span>Chars: <span id="final-chars">0</span></span> ·
+            <span>Time: <span id="final-time">0.0</span>s</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 履歴表示 -->
+    <!-- 履歴カード -->
     <div class="section">
-      <div class="section__header">
-        <h2 class="section__title">履歴</h2>
-      </div>
-      <div class="section__body">
-        <table class="table">
-          <thead>
-            <tr><th>日付</th><th>スコア</th></tr>
-          </thead>
-          <tbody>
-            {% for h in history %}
-            <tr>
-              <td>{{ h.createdAt }}</td>
-              <td>{{ h.score }}</td>
-            </tr>
-            {% else %}
-            <tr><td colspan="2">まだ履歴がありません</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="history-card">
+        <div class="history-header">
+          <h2 class="history-title">{{ _('History') }}</h2>
+        </div>
+        <div>
+          {% if history and history.length %}
+          <table class="history-table">
+            <thead>
+              <tr><th>{{ _('Date') }}</th><th>WPM</th></tr>
+            </thead>
+            <tbody id="history-body">
+              {% for h in history %}
+              <tr>
+                <td class="js-date">{{ h.createdAt }}</td>
+                <td><strong>{{ h.score }}</strong></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+            <div class="history-empty">まだ履歴がありません</div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+  // 単語リスト（TS側で JSON.stringify して words に入れておくこと）
   const words = {{ words | safe }};
+  const totalWords = words.length;
+
+  // 進行状態
   let currentWordIndex = 0;
   let currentCharIndex = 0;
-  let score = 0;
-  let isWaitingNext = false;
+  let correctChars = 0;
 
-  const wordDisplay = document.getElementById('word-display');
-  const scoreEl = document.getElementById('score');
-  const endScreen = document.getElementById('end-screen');
-  const finalScore = document.getElementById('final-score');
-  const scoreInput = document.getElementById('score-input');
+  // 計時
+  let startedAt = null;   // ms
+  let finishedAt = null;  // ms
+  let waitingNext = false;
 
-  function renderWord() {
-    const word = words[currentWordIndex];
+  // 要素取得
+  const hudRemaining = document.getElementById('hud-remaining');
+  const wordDisplay  = document.getElementById('word-display');
+  const endScreen    = document.getElementById('end-screen');
+  const finalWpmEl   = document.getElementById('final-wpm');
+  const finalCharsEl = document.getElementById('final-chars');
+  const finalTimeEl  = document.getElementById('final-time');
+  const scoreInput   = document.getElementById('score-input');
+
+  function pad2(n){ return n.toString().padStart(2,'0'); }
+
+  /* ---------- 残り単語数 HUD ---------- */
+  function renderRemaining() {
+    const left = Math.max(totalWords - currentWordIndex, 0);
+    hudRemaining.textContent = `Left: ${left} / ${totalWords}`;
+  }
+
+  /* ---------- 単語レンダー ---------- */
+  function renderWord(showWrong = false) {
+    const word = words[currentWordIndex] || '';
     let html = '';
     for (let i = 0; i < word.length; i++) {
+      const ch = word[i];
       if (i < currentCharIndex) {
-        html += `<span style="color:green">${word[i]}</span>`;
+        html += `<span class="char char--correct">${ch}</span>`;
+      } else if (i === currentCharIndex) {
+        const wrong = showWrong;
+        html += `<span class="char ${wrong ? 'char--wrong' : 'char--todo'} char--current">${ch}</span>`;
       } else {
-        html += `<span style="color:black">${word[i]}</span>`;
+        html += `<span class="char char--todo">${ch}</span>`;
       }
     }
     wordDisplay.innerHTML = html;
+    renderRemaining();
   }
 
-  function showEndScreen() {
+  /* ---------- 終了処理 & WPM算出 ---------- */
+  function finish() {
+    finishedAt = Date.now();
+    const elapsedMs = Math.max(1, finishedAt - (startedAt ?? finishedAt));
+    const minutes = elapsedMs / 60000;
+    const wpm = Math.round((correctChars / 5) / minutes);
+
+    // 表示
     wordDisplay.style.display = 'none';
     endScreen.style.display = 'block';
-    finalScore.textContent = score;
-    scoreInput.value = score; // フォームにセット
+    finalWpmEl.textContent   = String(wpm);
+    finalCharsEl.textContent = String(correctChars);
+    finalTimeEl.textContent  = (elapsedMs/1000).toFixed(1);
+    scoreInput.value         = String(wpm); // ← 保存するのは WPM
   }
 
   function nextWord() {
     currentWordIndex++;
     currentCharIndex = 0;
-    isWaitingNext = false;
-    if (currentWordIndex >= words.length) {
-      showEndScreen();
+    waitingNext = false;
+    if (currentWordIndex >= totalWords) {
+      finish();
     } else {
-      renderWord();
+      renderWord(false);
     }
   }
 
   document.addEventListener('keydown', (e) => {
-    if (isWaitingNext) return;
-    const word = words[currentWordIndex];
+    if (waitingNext || endScreen.style.display === 'block') return;
+
+    // 最初のキーで計時開始（Shift 等は除外）
+    if (!startedAt && e.key && e.key.length === 1) {
+      startedAt = Date.now();
+    }
+
+    const word = words[currentWordIndex] || '';
     const expected = word[currentCharIndex];
     if (!expected) return;
-    if (e.key === expected) {
+
+    // 1文字キー以外は無視（Shift/Alt/Ctrl など）
+    if (!e.key || e.key.length !== 1) return;
+
+    const pressed = e.key.length === 1 ? e.key : '';
+    if (!pressed) return;
+
+    // 大文字/小文字の影響をなくす（単語側は小文字想定）
+    if (pressed.toLowerCase() === expected.toLowerCase()) {
       currentCharIndex++;
-      score++;
-      scoreEl.textContent = score;
-      renderWord();
+      correctChars++;
+      renderWord(false);
+
       if (currentCharIndex === word.length) {
-        isWaitingNext = true;
-        setTimeout(nextWord, 1000);
+        waitingNext = true;
+        setTimeout(nextWord, 1000); // 1秒見せて次へ
       }
     } else {
-      // ミス表示
-      let html = '';
-      for (let i = 0; i < word.length; i++) {
-        if (i < currentCharIndex) {
-          html += `<span style="color:green">${word[i]}</span>`;
-        } else if (i === currentCharIndex) {
-          html += `<span style="color:red">${word[i]}</span>`;
-        } else {
-          html += `<span style="color:black">${word[i]}</span>`;
-        }
-      }
-      wordDisplay.innerHTML = html;
+      // ミス表示（現在の文字だけ赤）
+      renderWord(true);
     }
   });
 
-  renderWord();
+  // 初期表示
+  renderWord(false);
+
+  /* ---------- 履歴の日付を "Sun Oct 05 2025 23:32" に整形 ---------- */
+  (function formatHistoryDates(){
+    const cells = document.querySelectorAll('.js-date');
+    const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const month   = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    for (const td of cells) {
+      const raw = td.textContent?.trim() ?? '';
+      const d = new Date(raw); // 既存の文字列からDateを生成
+      if (isNaN(d.getTime())) continue;
+      const s = `${weekday[d.getDay()]} ${month[d.getMonth()]} ${pad2(d.getDate())} ${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+      td.textContent = s;
+    }
+  })();
 </script>
 {% endblock %}
