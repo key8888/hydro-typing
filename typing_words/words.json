@@ -1,0 +1,2802 @@
+[
+  {
+    "word": "accept",
+    "meaning": "受諾する、受け入れる"
+  },
+  {
+    "word": "access",
+    "meaning": "アクセスする、利用する、入手する／アクセス"
+  },
+  {
+    "word": "account",
+    "meaning": "アカウント、口座"
+  },
+  {
+    "word": "algorithm",
+    "meaning": "アルゴリズム"
+  },
+  {
+    "word": "allow",
+    "meaning": "可能にする、許可する"
+  },
+  {
+    "word": "alternative",
+    "meaning": "代替の"
+  },
+  {
+    "word": "application",
+    "meaning": "アプリケーション"
+  },
+  {
+    "word": "apply",
+    "meaning": "適用する"
+  },
+  {
+    "word": "argument",
+    "meaning": "引数、実引数"
+  },
+  {
+    "word": "array",
+    "meaning": "配列"
+  },
+  {
+    "word": "attribute",
+    "meaning": "属性"
+  },
+  {
+    "word": "audio",
+    "meaning": "オーディオ、音声"
+  },
+  {
+    "word": "author",
+    "meaning": "作成者"
+  },
+  {
+    "word": "available",
+    "meaning": "利用可能な、入手可能な"
+  },
+  {
+    "word": "avoid",
+    "meaning": "回避する"
+  },
+  {
+    "word": "backup",
+    "meaning": "バックアップ"
+  },
+  {
+    "word": "based",
+    "meaning": "ベースの、〜に基づく"
+  },
+  {
+    "word": "bit",
+    "meaning": "ビット"
+  },
+  {
+    "word": "blank",
+    "meaning": "空白の"
+  },
+  {
+    "word": "block",
+    "meaning": "ブロック／ブロックする"
+  },
+  {
+    "word": "boolean",
+    "meaning": "ブールの"
+  },
+  {
+    "word": "branch",
+    "meaning": "ブランチ、分岐"
+  },
+  {
+    "word": "browser",
+    "meaning": "ブラウザー"
+  },
+  {
+    "word": "bug",
+    "meaning": "バグ"
+  },
+  {
+    "word": "byte",
+    "meaning": "バイト"
+  },
+  {
+    "word": "cache",
+    "meaning": "キャッシュ"
+  },
+  {
+    "word": "cancel",
+    "meaning": "キャンセルする、取り消す"
+  },
+  {
+    "word": "capacity",
+    "meaning": "容量"
+  },
+  {
+    "word": "case",
+    "meaning": "場合、ケース、大文字小文字の区別"
+  },
+  {
+    "word": "character",
+    "meaning": "文字"
+  },
+  {
+    "word": "checkbox",
+    "meaning": "チェックボックス"
+  },
+  {
+    "word": "choice",
+    "meaning": "選択"
+  },
+  {
+    "word": "clear",
+    "meaning": "消去する"
+  },
+  {
+    "word": "click",
+    "meaning": "クリックする"
+  },
+  {
+    "word": "client",
+    "meaning": "クライアント"
+  },
+  {
+    "word": "clipboard",
+    "meaning": "クリップボード"
+  },
+  {
+    "word": "cloud",
+    "meaning": "クラウド"
+  },
+  {
+    "word": "cluster",
+    "meaning": "クラスター"
+  },
+  {
+    "word": "code",
+    "meaning": "コード"
+  },
+  {
+    "word": "collection",
+    "meaning": "コレクション、収集"
+  },
+  {
+    "word": "column",
+    "meaning": "列、カラム"
+  },
+  {
+    "word": "command",
+    "meaning": "コマンド、命令"
+  },
+  {
+    "word": "comment",
+    "meaning": "コメント／コメントする"
+  },
+  {
+    "word": "commit",
+    "meaning": "コミットする、（処理などを）確定する"
+  },
+  {
+    "word": "communication",
+    "meaning": "通信、コミュニケーション"
+  },
+  {
+    "word": "component",
+    "meaning": "コンポーネント、部品"
+  },
+  {
+    "word": "condition",
+    "meaning": "条件"
+  },
+  {
+    "word": "configuration",
+    "meaning": "構成"
+  },
+  {
+    "word": "connect",
+    "meaning": "接続する"
+  },
+  {
+    "word": "connection",
+    "meaning": "接続"
+  },
+  {
+    "word": "console",
+    "meaning": "コンソール"
+  },
+  {
+    "word": "constant",
+    "meaning": "定数／一定の"
+  },
+  {
+    "word": "constructor",
+    "meaning": "コンストラクター"
+  },
+  {
+    "word": "contain",
+    "meaning": "含む"
+  },
+  {
+    "word": "container",
+    "meaning": "コンテナー"
+  },
+  {
+    "word": "content",
+    "meaning": "内容、コンテンツ"
+  },
+  {
+    "word": "context",
+    "meaning": "コンテキスト、文脈"
+  },
+  {
+    "word": "continue",
+    "meaning": "続行する"
+  },
+  {
+    "word": "control",
+    "meaning": "制御、コントロール／制御する"
+  },
+  {
+    "word": "cookie",
+    "meaning": "クッキー"
+  },
+  {
+    "word": "core",
+    "meaning": "コア／最重要の"
+  },
+  {
+    "word": "correctly",
+    "meaning": "正しく、正常に"
+  },
+  {
+    "word": "count",
+    "meaning": "数える／回数、数"
+  },
+  {
+    "word": "current",
+    "meaning": "現在の"
+  },
+  {
+    "word": "cursor",
+    "meaning": "カーソル"
+  },
+  {
+    "word": "custom",
+    "meaning": "カスタムの、ユーザー設定の"
+  },
+  {
+    "word": "customize",
+    "meaning": "カスタマイズする"
+  },
+  {
+    "word": "damage",
+    "meaning": "損害、ダメージ"
+  },
+  {
+    "word": "dashboard",
+    "meaning": "ダッシュボード"
+  },
+  {
+    "word": "data",
+    "meaning": "データ"
+  },
+  {
+    "word": "database",
+    "meaning": "データベース"
+  },
+  {
+    "word": "debug",
+    "meaning": "デバッグする／デバッグ"
+  },
+  {
+    "word": "default",
+    "meaning": "デフォルト、既定値／デフォルトで〜になる"
+  },
+  {
+    "word": "define",
+    "meaning": "定義する"
+  },
+  {
+    "word": "delete",
+    "meaning": "削除する"
+  },
+  {
+    "word": "destroy",
+    "meaning": "破棄する"
+  },
+  {
+    "word": "determine",
+    "meaning": "判別する、決定する"
+  },
+  {
+    "word": "developer",
+    "meaning": "開発者"
+  },
+  {
+    "word": "development",
+    "meaning": "開発"
+  },
+  {
+    "word": "device",
+    "meaning": "機器、デバイス"
+  },
+  {
+    "word": "dialog",
+    "meaning": "ダイアログ"
+  },
+  {
+    "word": "directory",
+    "meaning": "ディレクトリー"
+  },
+  {
+    "word": "disk",
+    "meaning": "ディスク"
+  },
+  {
+    "word": "document",
+    "meaning": "ドキュメント、文書／（文書で）記録する、詳しく記載する"
+  },
+  {
+    "word": "documentation",
+    "meaning": "ドキュメント、資料"
+  },
+  {
+    "word": "domain",
+    "meaning": "ドメイン"
+  },
+  {
+    "word": "download",
+    "meaning": "ダウンロードする"
+  },
+  {
+    "word": "driver",
+    "meaning": "ドライバー"
+  },
+  {
+    "word": "drop-down",
+    "meaning": "ドロップダウンの"
+  },
+  {
+    "word": "edit",
+    "meaning": "編集する"
+  },
+  {
+    "word": "editor",
+    "meaning": "エディター"
+  },
+  {
+    "word": "element",
+    "meaning": "要素"
+  },
+  {
+    "word": "empty",
+    "meaning": "空の"
+  },
+  {
+    "word": "enter",
+    "meaning": "入力する"
+  },
+  {
+    "word": "entry",
+    "meaning": "エントリー、入力"
+  },
+  {
+    "word": "environment",
+    "meaning": "環境"
+  },
+  {
+    "word": "equal",
+    "meaning": "等しい／〜に等しい"
+  },
+  {
+    "word": "error",
+    "meaning": "エラー"
+  },
+  {
+    "word": "except",
+    "meaning": "〜を除く"
+  },
+  {
+    "word": "exception",
+    "meaning": "例外"
+  },
+  {
+    "word": "exist",
+    "meaning": "存在する"
+  },
+  {
+    "word": "exit",
+    "meaning": "終了する"
+  },
+  {
+    "word": "expand",
+    "meaning": "拡大する、展開する"
+  },
+  {
+    "word": "expected",
+    "meaning": "期待された"
+  },
+  {
+    "word": "export",
+    "meaning": "エクスポート／エクスポートする"
+  },
+  {
+    "word": "express",
+    "meaning": "表現する／明示された"
+  },
+  {
+    "word": "expression",
+    "meaning": "表現、式"
+  },
+  {
+    "word": "fail",
+    "meaning": "失敗する"
+  },
+  {
+    "word": "feature",
+    "meaning": "機能、特徴"
+  },
+  {
+    "word": "field",
+    "meaning": "フィールド"
+  },
+  {
+    "word": "file",
+    "meaning": "ファイル"
+  },
+  {
+    "word": "filter",
+    "meaning": "フィルター／絞り込む"
+  },
+  {
+    "word": "fix",
+    "meaning": "修正する、解決する"
+  },
+  {
+    "word": "flag",
+    "meaning": "フラグ"
+  },
+  {
+    "word": "folder",
+    "meaning": "フォルダー"
+  },
+  {
+    "word": "following",
+    "meaning": "次に述べる／次の項目"
+  },
+  {
+    "word": "font",
+    "meaning": "フォント"
+  },
+  {
+    "word": "force",
+    "meaning": "強制する"
+  },
+  {
+    "word": "format",
+    "meaning": "フォーマット、書式、形式／初期化する、書式設定する"
+  },
+  {
+    "word": "function",
+    "meaning": "機能、関数"
+  },
+  {
+    "word": "general",
+    "meaning": "全般の、一般の"
+  },
+  {
+    "word": "generate",
+    "meaning": "生成する"
+  },
+  {
+    "word": "global",
+    "meaning": "グローバルな、大域の"
+  },
+  {
+    "word": "graphic",
+    "meaning": "グラフィック、画像"
+  },
+  {
+    "word": "guide",
+    "meaning": "ガイド"
+  },
+  {
+    "word": "hardware",
+    "meaning": "ハードウェア"
+  },
+  {
+    "word": "height",
+    "meaning": "高さ"
+  },
+  {
+    "word": "hide",
+    "meaning": "隠す、非表示にする"
+  },
+  {
+    "word": "highlight",
+    "meaning": "ハイライト／強調表示する"
+  },
+  {
+    "word": "host",
+    "meaning": "ホスト"
+  },
+  {
+    "word": "icon",
+    "meaning": "アイコン"
+  },
+  {
+    "word": "ignore",
+    "meaning": "無視する"
+  },
+  {
+    "word": "image",
+    "meaning": "画像、イメージ"
+  },
+  {
+    "word": "import",
+    "meaning": "インポート／インポートする"
+  },
+  {
+    "word": "including",
+    "meaning": "〜を含めて"
+  },
+  {
+    "word": "index",
+    "meaning": "インデックス、索引、添字"
+  },
+  {
+    "word": "indicate",
+    "meaning": "示す"
+  },
+  {
+    "word": "input",
+    "meaning": "入力／入力する"
+  },
+  {
+    "word": "install",
+    "meaning": "インストールする"
+  },
+  {
+    "word": "installer",
+    "meaning": "インストーラー"
+  },
+  {
+    "word": "instance",
+    "meaning": "インスタンス、実例"
+  },
+  {
+    "word": "instruction",
+    "meaning": "指示"
+  },
+  {
+    "word": "integer",
+    "meaning": "整数"
+  },
+  {
+    "word": "interface",
+    "meaning": "インターフェイス"
+  },
+  {
+    "word": "issue",
+    "meaning": "問題点"
+  },
+  {
+    "word": "item",
+    "meaning": "項目"
+  },
+  {
+    "word": "label",
+    "meaning": "ラベル／ラベルを貼る"
+  },
+  {
+    "word": "latest",
+    "meaning": "最近の"
+  },
+  {
+    "word": "layer",
+    "meaning": "レイヤー、層"
+  },
+  {
+    "word": "layout",
+    "meaning": "レイアウト"
+  },
+  {
+    "word": "length",
+    "meaning": "長さ"
+  },
+  {
+    "word": "level",
+    "meaning": "レベル、水準"
+  },
+  {
+    "word": "library",
+    "meaning": "ライブラリー"
+  },
+  {
+    "word": "license",
+    "meaning": "ライセンス／ライセンス供与する"
+  },
+  {
+    "word": "limit",
+    "meaning": "制限する／制限"
+  },
+  {
+    "word": "link",
+    "meaning": "リンク／リンクする"
+  },
+  {
+    "word": "local",
+    "meaning": "ローカルの、局所の"
+  },
+  {
+    "word": "location",
+    "meaning": "位置、場所"
+  },
+  {
+    "word": "lock",
+    "meaning": "ロックする／ロック"
+  },
+  {
+    "word": "log",
+    "meaning": "ログ／ログを取る"
+  },
+  {
+    "word": "login",
+    "meaning": "ログイン"
+  },
+  {
+    "word": "loop",
+    "meaning": "ループ"
+  },
+  {
+    "word": "manage",
+    "meaning": "管理する"
+  },
+  {
+    "word": "manager",
+    "meaning": "マネージャー"
+  },
+  {
+    "word": "media",
+    "meaning": "メディア"
+  },
+  {
+    "word": "memory",
+    "meaning": "メモリー"
+  },
+  {
+    "word": "merge",
+    "meaning": "マージする、統合する"
+  },
+  {
+    "word": "method",
+    "meaning": "メソッド、方法"
+  },
+  {
+    "word": "missing",
+    "meaning": "見つからない、欠落している"
+  },
+  {
+    "word": "mode",
+    "meaning": "モード"
+  },
+  {
+    "word": "module",
+    "meaning": "モジュール"
+  },
+  {
+    "word": "network",
+    "meaning": "ネットワーク"
+  },
+  {
+    "word": "node",
+    "meaning": "ノード"
+  },
+  {
+    "word": "none",
+    "meaning": "一つもなし"
+  },
+  {
+    "word": "normal",
+    "meaning": "標準の"
+  },
+  {
+    "word": "note",
+    "meaning": "注意／〜に注意する"
+  },
+  {
+    "word": "notice",
+    "meaning": "通知、注意"
+  },
+  {
+    "word": "null",
+    "meaning": "空の、nullの／null"
+  },
+  {
+    "word": "occur",
+    "meaning": "発生する"
+  },
+  {
+    "word": "operation",
+    "meaning": "操作、処理"
+  },
+  {
+    "word": "option",
+    "meaning": "オプション"
+  },
+  {
+    "word": "optional",
+    "meaning": "任意の、オプションの"
+  },
+  {
+    "word": "output",
+    "meaning": "出力／出力する"
+  },
+  {
+    "word": "override",
+    "meaning": "オーバーライドする、優先する"
+  },
+  {
+    "word": "owner",
+    "meaning": "所有者、オーナー"
+  },
+  {
+    "word": "package",
+    "meaning": "パッケージ"
+  },
+  {
+    "word": "pane",
+    "meaning": "ペイン、ウィンドウ"
+  },
+  {
+    "word": "parameter",
+    "meaning": "パラメーター、仮引数"
+  },
+  {
+    "word": "pass",
+    "meaning": "渡す"
+  },
+  {
+    "word": "patch",
+    "meaning": "パッチ、修正プログラム"
+  },
+  {
+    "word": "path",
+    "meaning": "パス"
+  },
+  {
+    "word": "perform",
+    "meaning": "実行する"
+  },
+  {
+    "word": "performance",
+    "meaning": "性能、パフォーマンス"
+  },
+  {
+    "word": "permission",
+    "meaning": "許可、パーミッション"
+  },
+  {
+    "word": "physical",
+    "meaning": "物理的な"
+  },
+  {
+    "word": "pool",
+    "meaning": "プール"
+  },
+  {
+    "word": "popup",
+    "meaning": "ポップアップ"
+  },
+  {
+    "word": "port",
+    "meaning": "ポート"
+  },
+  {
+    "word": "position",
+    "meaning": "位置"
+  },
+  {
+    "word": "press",
+    "meaning": "押す"
+  },
+  {
+    "word": "preview",
+    "meaning": "プレビュー／プレビューする"
+  },
+  {
+    "word": "previous",
+    "meaning": "前の"
+  },
+  {
+    "word": "print",
+    "meaning": "印刷する、出力する"
+  },
+  {
+    "word": "process",
+    "meaning": "プロセス、処理／処理する"
+  },
+  {
+    "word": "profile",
+    "meaning": "プロファイル、プロフィール"
+  },
+  {
+    "word": "properly",
+    "meaning": "適切に、正常に"
+  },
+  {
+    "word": "property",
+    "meaning": "プロパティー"
+  },
+  {
+    "word": "protect",
+    "meaning": "保護する"
+  },
+  {
+    "word": "provide",
+    "meaning": "提供する"
+  },
+  {
+    "word": "public",
+    "meaning": "公開の"
+  },
+  {
+    "word": "publish",
+    "meaning": "公開する"
+  },
+  {
+    "word": "pull",
+    "meaning": "プルする、取得する／プル"
+  },
+  {
+    "word": "push",
+    "meaning": "押す、プッシュする"
+  },
+  {
+    "word": "query",
+    "meaning": "クエリー、問い合わせ"
+  },
+  {
+    "word": "range",
+    "meaning": "範囲"
+  },
+  {
+    "word": "real-time",
+    "meaning": "リアルタイムの"
+  },
+  {
+    "word": "receive",
+    "meaning": "受信する"
+  },
+  {
+    "word": "recommend",
+    "meaning": "推奨する"
+  },
+  {
+    "word": "record",
+    "meaning": "記録する／記録、レコード"
+  },
+  {
+    "word": "refactor",
+    "meaning": "リファクタリングする、リファクターする"
+  },
+  {
+    "word": "refer",
+    "meaning": "参照する"
+  },
+  {
+    "word": "reference",
+    "meaning": "参照、リファレンス／参照する"
+  },
+  {
+    "word": "release",
+    "meaning": "リリースする、公開する"
+  },
+  {
+    "word": "remove",
+    "meaning": "削除する"
+  },
+  {
+    "word": "rename",
+    "meaning": "名前を変更する"
+  },
+  {
+    "word": "replace",
+    "meaning": "置換する"
+  },
+  {
+    "word": "report",
+    "meaning": "報告する／レポート"
+  },
+  {
+    "word": "request",
+    "meaning": "要求、リクエスト／要求する"
+  },
+  {
+    "word": "require",
+    "meaning": "必要とする"
+  },
+  {
+    "word": "reset",
+    "meaning": "リセットする"
+  },
+  {
+    "word": "resource",
+    "meaning": "リソース、資源"
+  },
+  {
+    "word": "respond",
+    "meaning": "応答する、返信する"
+  },
+  {
+    "word": "response",
+    "meaning": "応答"
+  },
+  {
+    "word": "restart",
+    "meaning": "再起動する"
+  },
+  {
+    "word": "result",
+    "meaning": "結果"
+  },
+  {
+    "word": "right-click",
+    "meaning": "右クリックする"
+  },
+  {
+    "word": "role",
+    "meaning": "役割、ロール"
+  },
+  {
+    "word": "root",
+    "meaning": "ルート"
+  },
+  {
+    "word": "route",
+    "meaning": "経路、ルート"
+  },
+  {
+    "word": "row",
+    "meaning": "行"
+  },
+  {
+    "word": "save",
+    "meaning": "保存する"
+  },
+  {
+    "word": "scan",
+    "meaning": "スキャンする、走査する"
+  },
+  {
+    "word": "schedule",
+    "meaning": "予定、スケジュール／予定する"
+  },
+  {
+    "word": "screen",
+    "meaning": "画面"
+  },
+  {
+    "word": "script",
+    "meaning": "スクリプト"
+  },
+  {
+    "word": "scroll",
+    "meaning": "スクロールする"
+  },
+  {
+    "word": "search",
+    "meaning": "検索する／検索"
+  },
+  {
+    "word": "security",
+    "meaning": "セキュリティー"
+  },
+  {
+    "word": "select",
+    "meaning": "選択する"
+  },
+  {
+    "word": "server",
+    "meaning": "サーバー"
+  },
+  {
+    "word": "setting",
+    "meaning": "設定"
+  },
+  {
+    "word": "shape",
+    "meaning": "形状"
+  },
+  {
+    "word": "share",
+    "meaning": "共有する"
+  },
+  {
+    "word": "shortcut",
+    "meaning": "ショートカット"
+  },
+  {
+    "word": "sign",
+    "meaning": "記号／サインイン(sign in)する、サインアウト（sign out）する"
+  },
+  {
+    "word": "skip",
+    "meaning": "スキップする、とばす"
+  },
+  {
+    "word": "sort",
+    "meaning": "並び替える、ソートする"
+  },
+  {
+    "word": "source",
+    "meaning": "ソース、〜元（送信元など）"
+  },
+  {
+    "word": "specific",
+    "meaning": "特定の"
+  },
+  {
+    "word": "specify",
+    "meaning": "指定する"
+  },
+  {
+    "word": "state",
+    "meaning": "状態"
+  },
+  {
+    "word": "status",
+    "meaning": "状態、ステータス"
+  },
+  {
+    "word": "step",
+    "meaning": "ステップ、手順"
+  },
+  {
+    "word": "store",
+    "meaning": "保存する、格納する"
+  },
+  {
+    "word": "string",
+    "meaning": "文字列"
+  },
+  {
+    "word": "submit",
+    "meaning": "提出する、送信する"
+  },
+  {
+    "word": "successful",
+    "meaning": "成功した"
+  },
+  {
+    "word": "supply",
+    "meaning": "提供する、供給する"
+  },
+  {
+    "word": "support",
+    "meaning": "サポートする、支援する／サポート"
+  },
+  {
+    "word": "switch",
+    "meaning": "切り替える／スイッチ"
+  },
+  {
+    "word": "system",
+    "meaning": "システム"
+  },
+  {
+    "word": "tab",
+    "meaning": "タブ"
+  },
+  {
+    "word": "table",
+    "meaning": "表、テーブル"
+  },
+  {
+    "word": "tag",
+    "meaning": "タグ"
+  },
+  {
+    "word": "target",
+    "meaning": "ターゲット、対象、〜先（移動先など）"
+  },
+  {
+    "word": "task",
+    "meaning": "タスク"
+  },
+  {
+    "word": "template",
+    "meaning": "テンプレート"
+  },
+  {
+    "word": "temporary",
+    "meaning": "一時的な"
+  },
+  {
+    "word": "throw",
+    "meaning": "スローする、投げる"
+  },
+  {
+    "word": "timeout",
+    "meaning": "タイムアウト"
+  },
+  {
+    "word": "touch",
+    "meaning": "タッチ／タッチする"
+  },
+  {
+    "word": "translate",
+    "meaning": "変換する、翻訳する"
+  },
+  {
+    "word": "type",
+    "meaning": "型、種類／（キーボードで）入力する"
+  },
+  {
+    "word": "unable",
+    "meaning": "不可能な"
+  },
+  {
+    "word": "undo",
+    "meaning": "元に戻す"
+  },
+  {
+    "word": "uninstall",
+    "meaning": "アンインストールする"
+  },
+  {
+    "word": "unit",
+    "meaning": "単位、ユニット"
+  },
+  {
+    "word": "unused",
+    "meaning": "未使用の"
+  },
+  {
+    "word": "update",
+    "meaning": "更新する／更新"
+  },
+  {
+    "word": "upgrade",
+    "meaning": "アップグレードする"
+  },
+  {
+    "word": "upload",
+    "meaning": "アップロードする／アップロード"
+  },
+  {
+    "word": "value",
+    "meaning": "値"
+  },
+  {
+    "word": "variable",
+    "meaning": "変数"
+  },
+  {
+    "word": "version",
+    "meaning": "バージョン、版"
+  },
+  {
+    "word": "view",
+    "meaning": "表示する／表示、ビュー"
+  },
+  {
+    "word": "warn",
+    "meaning": "警告する"
+  },
+  {
+    "word": "warning",
+    "meaning": "警告"
+  },
+  {
+    "word": "widget",
+    "meaning": "ウィジェット"
+  },
+  {
+    "word": "width",
+    "meaning": "幅"
+  },
+  {
+    "word": "wizard",
+    "meaning": "ウィザード"
+  },
+  {
+    "word": "abstract",
+    "meaning": "抽象的な、抽象の"
+  },
+  {
+    "word": "accessibility",
+    "meaning": "アクセシビリティー"
+  },
+  {
+    "word": "accessible",
+    "meaning": "アクセス可能な、利用可能な"
+  },
+  {
+    "word": "activate",
+    "meaning": "有効にする、アクティブにする"
+  },
+  {
+    "word": "active",
+    "meaning": "有効な、アクティブな"
+  },
+  {
+    "word": "additional",
+    "meaning": "追加の"
+  },
+  {
+    "word": "adjust",
+    "meaning": "調整する"
+  },
+  {
+    "word": "administrator",
+    "meaning": "管理者"
+  },
+  {
+    "word": "aggregate",
+    "meaning": "集約する"
+  },
+  {
+    "word": "alias",
+    "meaning": "エイリアス、別名"
+  },
+  {
+    "word": "allocation",
+    "meaning": "割り当て"
+  },
+  {
+    "word": "annotation",
+    "meaning": "アノテーション、注釈"
+  },
+  {
+    "word": "anonymous",
+    "meaning": "無名の、匿名の"
+  },
+  {
+    "word": "append",
+    "meaning": "追加する"
+  },
+  {
+    "word": "applicable",
+    "meaning": "該当する、適用可能な"
+  },
+  {
+    "word": "archive",
+    "meaning": "アーカイブ／アーカイブする"
+  },
+  {
+    "word": "assert",
+    "meaning": "アサートする、表明する"
+  },
+  {
+    "word": "asset",
+    "meaning": "アセット、資産"
+  },
+  {
+    "word": "assign",
+    "meaning": "割り当てる、（変数に）代入する"
+  },
+  {
+    "word": "assignment",
+    "meaning": "割り当て、（変数への）代入"
+  },
+  {
+    "word": "associate",
+    "meaning": "関連づける"
+  },
+  {
+    "word": "attach",
+    "meaning": "接続する、添付する"
+  },
+  {
+    "word": "authentication",
+    "meaning": "認証"
+  },
+  {
+    "word": "authorize",
+    "meaning": "権限を与える"
+  },
+  {
+    "word": "automatic",
+    "meaning": "自動の"
+  },
+  {
+    "word": "automatically",
+    "meaning": "自動で、自動的に"
+  },
+  {
+    "word": "availability",
+    "meaning": "可用性"
+  },
+  {
+    "word": "batch",
+    "meaning": "バッチ"
+  },
+  {
+    "word": "binary",
+    "meaning": "バイナリーの、二進法の"
+  },
+  {
+    "word": "bind",
+    "meaning": "バインドする"
+  },
+  {
+    "word": "boot",
+    "meaning": "起動する／起動"
+  },
+  {
+    "word": "brace",
+    "meaning": "波かっこ"
+  },
+  {
+    "word": "bracket",
+    "meaning": "角かっこ"
+  },
+  {
+    "word": "breakpoint",
+    "meaning": "ブレークポイント"
+  },
+  {
+    "word": "browse",
+    "meaning": "閲覧する、参照する"
+  },
+  {
+    "word": "buffer",
+    "meaning": "バッファー／バッファー処理する"
+  },
+  {
+    "word": "bump",
+    "meaning": "バージョンを上げる"
+  },
+  {
+    "word": "bundle",
+    "meaning": "バンドル／バンドルする"
+  },
+  {
+    "word": "calculate",
+    "meaning": "計算する"
+  },
+  {
+    "word": "callback",
+    "meaning": "コールバック"
+  },
+  {
+    "word": "capability",
+    "meaning": "機能"
+  },
+  {
+    "word": "capture",
+    "meaning": "取り込む、キャプチャーする"
+  },
+  {
+    "word": "caret",
+    "meaning": "文字入力カーソル、カレット"
+  },
+  {
+    "word": "cast",
+    "meaning": "キャストする"
+  },
+  {
+    "word": "certificate",
+    "meaning": "証明書"
+  },
+  {
+    "word": "checkout",
+    "meaning": "チェックアウト"
+  },
+  {
+    "word": "clarify",
+    "meaning": "明確にする"
+  },
+  {
+    "word": "cleanup",
+    "meaning": "クリーンアップ、整理"
+  },
+  {
+    "word": "clone",
+    "meaning": "複製する、クローンする"
+  },
+  {
+    "word": "collapse",
+    "meaning": "折りたたむ、非表示にする"
+  },
+  {
+    "word": "compatibility",
+    "meaning": "互換性"
+  },
+  {
+    "word": "compile",
+    "meaning": "コンパイルする"
+  },
+  {
+    "word": "completion",
+    "meaning": "補完、完了"
+  },
+  {
+    "word": "compress",
+    "meaning": "圧縮する"
+  },
+  {
+    "word": "compute",
+    "meaning": "計算する"
+  },
+  {
+    "word": "conditional",
+    "meaning": "条件つきの"
+  },
+  {
+    "word": "configure",
+    "meaning": "構成する、設定する"
+  },
+  {
+    "word": "confirm",
+    "meaning": "確定する、確認する"
+  },
+  {
+    "word": "conflict",
+    "meaning": "競合する／競合"
+  },
+  {
+    "word": "constraint",
+    "meaning": "制約"
+  },
+  {
+    "word": "construct",
+    "meaning": "（コンストラクターで）生成する"
+  },
+  {
+    "word": "contact",
+    "meaning": "連絡する／連絡先"
+  },
+  {
+    "word": "contribute",
+    "meaning": "貢献する"
+  },
+  {
+    "word": "convert",
+    "meaning": "変換する"
+  },
+  {
+    "word": "coordinate",
+    "meaning": "座標"
+  },
+  {
+    "word": "copyright",
+    "meaning": "著作権"
+  },
+  {
+    "word": "crash",
+    "meaning": "クラッシュする、突然停止する／クラッシュ"
+  },
+  {
+    "word": "credential",
+    "meaning": "資格情報、認証情報"
+  },
+  {
+    "word": "debugger",
+    "meaning": "デバッガー"
+  },
+  {
+    "word": "decimal",
+    "meaning": "小数の、十進法の"
+  },
+  {
+    "word": "declaration",
+    "meaning": "宣言"
+  },
+  {
+    "word": "declare",
+    "meaning": "宣言する"
+  },
+  {
+    "word": "decode",
+    "meaning": "デコードする"
+  },
+  {
+    "word": "dedicated",
+    "meaning": "専用の"
+  },
+  {
+    "word": "delay",
+    "meaning": "遅延"
+  },
+  {
+    "word": "dependency",
+    "meaning": "依存関係"
+  },
+  {
+    "word": "deploy",
+    "meaning": "配備する、デプロイする"
+  },
+  {
+    "word": "deployment",
+    "meaning": "配備、デプロイ"
+  },
+  {
+    "word": "deprecated",
+    "meaning": "非推奨の"
+  },
+  {
+    "word": "deprecation",
+    "meaning": "非推奨"
+  },
+  {
+    "word": "descriptor",
+    "meaning": "記述子"
+  },
+  {
+    "word": "destination",
+    "meaning": "目的地、〜先（移動先など）"
+  },
+  {
+    "word": "detect",
+    "meaning": "検出する"
+  },
+  {
+    "word": "digit",
+    "meaning": "数字、桁"
+  },
+  {
+    "word": "disable",
+    "meaning": "無効にする"
+  },
+  {
+    "word": "display",
+    "meaning": "表示する／表示、画面"
+  },
+  {
+    "word": "distribute",
+    "meaning": "分散する、配布する"
+  },
+  {
+    "word": "dump",
+    "meaning": "ダンプする"
+  },
+  {
+    "word": "duplicate",
+    "meaning": "重複する／複製する"
+  },
+  {
+    "word": "duration",
+    "meaning": "期間"
+  },
+  {
+    "word": "dynamic",
+    "meaning": "動的な"
+  },
+  {
+    "word": "dynamically",
+    "meaning": "動的に"
+  },
+  {
+    "word": "emit",
+    "meaning": "発する、生成する"
+  },
+  {
+    "word": "enable",
+    "meaning": "可能にする、有効にする"
+  },
+  {
+    "word": "encode",
+    "meaning": "エンコードする、符号化する"
+  },
+  {
+    "word": "encoding",
+    "meaning": "エンコーディング、符号化"
+  },
+  {
+    "word": "encounter",
+    "meaning": "遭遇する"
+  },
+  {
+    "word": "encryption",
+    "meaning": "暗号化"
+  },
+  {
+    "word": "endpoint",
+    "meaning": "エンドポイント、端点"
+  },
+  {
+    "word": "ensure",
+    "meaning": "確実にする、確かめる"
+  },
+  {
+    "word": "entity",
+    "meaning": "エンティティー、実体"
+  },
+  {
+    "word": "enumeration",
+    "meaning": "列挙"
+  },
+  {
+    "word": "escape",
+    "meaning": "エスケープする"
+  },
+  {
+    "word": "exclude",
+    "meaning": "除外する"
+  },
+  {
+    "word": "executable",
+    "meaning": "実行可能な／実行可能ファイル"
+  },
+  {
+    "word": "execute",
+    "meaning": "実行する"
+  },
+  {
+    "word": "execution",
+    "meaning": "実行"
+  },
+  {
+    "word": "existing",
+    "meaning": "既存の"
+  },
+  {
+    "word": "extend",
+    "meaning": "拡張する"
+  },
+  {
+    "word": "extension",
+    "meaning": "拡張、拡張子"
+  },
+  {
+    "word": "external",
+    "meaning": "外部の"
+  },
+  {
+    "word": "extract",
+    "meaning": "抽出する"
+  },
+  {
+    "word": "failure",
+    "meaning": "失敗、故障"
+  },
+  {
+    "word": "fallback",
+    "meaning": "フォールバック／フォールバックする"
+  },
+  {
+    "word": "fetch",
+    "meaning": "取得する、フェッチする"
+  },
+  {
+    "word": "fire",
+    "meaning": "始動する、発火する"
+  },
+  {
+    "word": "framework",
+    "meaning": "フレームワーク"
+  },
+  {
+    "word": "functionality",
+    "meaning": "機能"
+  },
+  {
+    "word": "generation",
+    "meaning": "生成、世代"
+  },
+  {
+    "word": "generic",
+    "meaning": "汎用の、総称の、ジェネリックの"
+  },
+  {
+    "word": "hack",
+    "meaning": "ハッキング、一時回避策／ハックする、（その場しのぎで）作る"
+  },
+  {
+    "word": "handle",
+    "meaning": "処理する／ハンドル"
+  },
+  {
+    "word": "handler",
+    "meaning": "ハンドラー"
+  },
+  {
+    "word": "handling",
+    "meaning": "処理"
+  },
+  {
+    "word": "hash",
+    "meaning": "ハッシュ、ハッシュ記号"
+  },
+  {
+    "word": "header",
+    "meaning": "ヘッダー"
+  },
+  {
+    "word": "hierarchy",
+    "meaning": "階層"
+  },
+  {
+    "word": "identifier",
+    "meaning": "識別子"
+  },
+  {
+    "word": "implement",
+    "meaning": "実装する"
+  },
+  {
+    "word": "implementation",
+    "meaning": "実装"
+  },
+  {
+    "word": "incompatible",
+    "meaning": "互換性がない"
+  },
+  {
+    "word": "increment",
+    "meaning": "増分、インクリメント／増分させる"
+  },
+  {
+    "word": "indentation",
+    "meaning": "インデント"
+  },
+  {
+    "word": "initial",
+    "meaning": "初期の、最初の"
+  },
+  {
+    "word": "initialization",
+    "meaning": "初期化"
+  },
+  {
+    "word": "initialize",
+    "meaning": "初期化する"
+  },
+  {
+    "word": "inline",
+    "meaning": "インラインの／インライン化する"
+  },
+  {
+    "word": "inner",
+    "meaning": "内部の、内側の"
+  },
+  {
+    "word": "insert",
+    "meaning": "挿入する"
+  },
+  {
+    "word": "inspect",
+    "meaning": "検査する"
+  },
+  {
+    "word": "inspection",
+    "meaning": "検査"
+  },
+  {
+    "word": "installation",
+    "meaning": "インストール"
+  },
+  {
+    "word": "interact",
+    "meaning": "対話する"
+  },
+  {
+    "word": "internal",
+    "meaning": "内部の"
+  },
+  {
+    "word": "interval",
+    "meaning": "間隔"
+  },
+  {
+    "word": "invalid",
+    "meaning": "無効な"
+  },
+  {
+    "word": "invoke",
+    "meaning": "呼び出す"
+  },
+  {
+    "word": "iterate",
+    "meaning": "（処理を）反復する、繰り返す"
+  },
+  {
+    "word": "latency",
+    "meaning": "待ち時間"
+  },
+  {
+    "word": "launch",
+    "meaning": "起動する、開始する"
+  },
+  {
+    "word": "listener",
+    "meaning": "リスナー"
+  },
+  {
+    "word": "load",
+    "meaning": "読み込む"
+  },
+  {
+    "word": "locale",
+    "meaning": "ロケール"
+  },
+  {
+    "word": "logic",
+    "meaning": "ロジック、論理"
+  },
+  {
+    "word": "lookup",
+    "meaning": "検索、探索、ルックアップ"
+  },
+  {
+    "word": "manual",
+    "meaning": "手動の／マニュアル"
+  },
+  {
+    "word": "manually",
+    "meaning": "手動で"
+  },
+  {
+    "word": "map",
+    "meaning": "地図／対応づける、マッピングする"
+  },
+  {
+    "word": "master",
+    "meaning": "マスター"
+  },
+  {
+    "word": "matching",
+    "meaning": "一致する、マッチする"
+  },
+  {
+    "word": "maximum",
+    "meaning": "最大の"
+  },
+  {
+    "word": "metadata",
+    "meaning": "メタデータ"
+  },
+  {
+    "word": "migration",
+    "meaning": "移行"
+  },
+  {
+    "word": "millisecond",
+    "meaning": "ミリ秒"
+  },
+  {
+    "word": "minimum",
+    "meaning": "最小の"
+  },
+  {
+    "word": "minor",
+    "meaning": "マイナーな、小さな"
+  },
+  {
+    "word": "mock",
+    "meaning": "モックの、模造の"
+  },
+  {
+    "word": "modification",
+    "meaning": "修正、変更"
+  },
+  {
+    "word": "modifier",
+    "meaning": "修飾子"
+  },
+  {
+    "word": "modify",
+    "meaning": "修正する、変更する"
+  },
+  {
+    "word": "monitor",
+    "meaning": "監視する"
+  },
+  {
+    "word": "multiple",
+    "meaning": "複数の"
+  },
+  {
+    "word": "namespace",
+    "meaning": "名前空間"
+  },
+  {
+    "word": "native",
+    "meaning": "ネイティブの"
+  },
+  {
+    "word": "navigate",
+    "meaning": "移動する"
+  },
+  {
+    "word": "navigation",
+    "meaning": "ナビゲーション、移動"
+  },
+  {
+    "word": "nested",
+    "meaning": "入れ子の、ネストされた"
+  },
+  {
+    "word": "normalize",
+    "meaning": "標準化する、正規化する"
+  },
+  {
+    "word": "notification",
+    "meaning": "通知"
+  },
+  {
+    "word": "notify",
+    "meaning": "通知する"
+  },
+  {
+    "word": "numeric",
+    "meaning": "数値の"
+  },
+  {
+    "word": "obtain",
+    "meaning": "取得する"
+  },
+  {
+    "word": "occurrence",
+    "meaning": "出現、発生"
+  },
+  {
+    "word": "offset",
+    "meaning": "オフセット"
+  },
+  {
+    "word": "optimize",
+    "meaning": "最適化する"
+  },
+  {
+    "word": "otherwise",
+    "meaning": "そうでなければ、さもないと"
+  },
+  {
+    "word": "overview",
+    "meaning": "概要"
+  },
+  {
+    "word": "overwrite",
+    "meaning": "上書きする"
+  },
+  {
+    "word": "padding",
+    "meaning": "パディング"
+  },
+  {
+    "word": "parenthesis",
+    "meaning": "丸かっこ"
+  },
+  {
+    "word": "parse",
+    "meaning": "パースする、解析する"
+  },
+  {
+    "word": "payload",
+    "meaning": "ペイロード"
+  },
+  {
+    "word": "permit",
+    "meaning": "許可する"
+  },
+  {
+    "word": "persistence",
+    "meaning": "永続化"
+  },
+  {
+    "word": "placeholder",
+    "meaning": "プレースホルダー"
+  },
+  {
+    "word": "plugin",
+    "meaning": "プラグイン"
+  },
+  {
+    "word": "populate",
+    "meaning": "自動入力する"
+  },
+  {
+    "word": "preference",
+    "meaning": "プリファレンス、ユーザー設定"
+  },
+  {
+    "word": "preferred",
+    "meaning": "優先の"
+  },
+  {
+    "word": "prefix",
+    "meaning": "接頭辞、プレフィックス"
+  },
+  {
+    "word": "priority",
+    "meaning": "優先順位、優先度"
+  },
+  {
+    "word": "private",
+    "meaning": "プライベートな、非公開の"
+  },
+  {
+    "word": "progress",
+    "meaning": "進行状況"
+  },
+  {
+    "word": "protocol",
+    "meaning": "プロトコル"
+  },
+  {
+    "word": "prototype",
+    "meaning": "プロトタイプ"
+  },
+  {
+    "word": "provider",
+    "meaning": "プロバイダー"
+  },
+  {
+    "word": "provision",
+    "meaning": "プロビジョニング／供給する"
+  },
+  {
+    "word": "proxy",
+    "meaning": "プロキシ"
+  },
+  {
+    "word": "queue",
+    "meaning": "キュー、待ち行列"
+  },
+  {
+    "word": "raw",
+    "meaning": "生の"
+  },
+  {
+    "word": "redirect",
+    "meaning": "リダイレクトする、転送する"
+  },
+  {
+    "word": "redundant",
+    "meaning": "冗長な"
+  },
+  {
+    "word": "refresh",
+    "meaning": "更新する"
+  },
+  {
+    "word": "register",
+    "meaning": "登録する"
+  },
+  {
+    "word": "registration",
+    "meaning": "登録"
+  },
+  {
+    "word": "registry",
+    "meaning": "レジストリー"
+  },
+  {
+    "word": "reload",
+    "meaning": "再読み込みする、リロードする"
+  },
+  {
+    "word": "remote",
+    "meaning": "遠隔の、リモートの"
+  },
+  {
+    "word": "removal",
+    "meaning": "削除、除去"
+  },
+  {
+    "word": "render",
+    "meaning": "描画する、レンダリングする"
+  },
+  {
+    "word": "repository",
+    "meaning": "リポジトリー"
+  },
+  {
+    "word": "represent",
+    "meaning": "表す"
+  },
+  {
+    "word": "representation",
+    "meaning": "表現"
+  },
+  {
+    "word": "reserve",
+    "meaning": "予約する、確保する"
+  },
+  {
+    "word": "resize",
+    "meaning": "サイズ変更する"
+  },
+  {
+    "word": "resolution",
+    "meaning": "解像度、精度、解決"
+  },
+  {
+    "word": "resolve",
+    "meaning": "解決する"
+  },
+  {
+    "word": "restore",
+    "meaning": "復元する"
+  },
+  {
+    "word": "restriction",
+    "meaning": "制限"
+  },
+  {
+    "word": "retrieve",
+    "meaning": "取得する"
+  },
+  {
+    "word": "revert",
+    "meaning": "（以前の状態に）戻る、戻す"
+  },
+  {
+    "word": "revision",
+    "meaning": "改訂、リビジョン"
+  },
+  {
+    "word": "runtime",
+    "meaning": "実行時、ランタイム"
+  },
+  {
+    "word": "sanitize",
+    "meaning": "サニタイズする"
+  },
+  {
+    "word": "scale",
+    "meaning": "（大きさを）変える"
+  },
+  {
+    "word": "schema",
+    "meaning": "スキーマ"
+  },
+  {
+    "word": "scope",
+    "meaning": "スコープ、範囲"
+  },
+  {
+    "word": "secure",
+    "meaning": "セキュアな、安全な"
+  },
+  {
+    "word": "separator",
+    "meaning": "セパレーター、区切り"
+  },
+  {
+    "word": "sequence",
+    "meaning": "シーケンス"
+  },
+  {
+    "word": "serialize",
+    "meaning": "シリアル化する"
+  },
+  {
+    "word": "session",
+    "meaning": "セッション"
+  },
+  {
+    "word": "setup",
+    "meaning": "設定、構成、セットアップ"
+  },
+  {
+    "word": "shutdown",
+    "meaning": "シャットダウン"
+  },
+  {
+    "word": "signature",
+    "meaning": "署名、シグネチャー"
+  },
+  {
+    "word": "simplify",
+    "meaning": "簡素化する"
+  },
+  {
+    "word": "snapshot",
+    "meaning": "スナップショット"
+  },
+  {
+    "word": "socket",
+    "meaning": "ソケット"
+  },
+  {
+    "word": "specification",
+    "meaning": "仕様"
+  },
+  {
+    "word": "split",
+    "meaning": "分割する"
+  },
+  {
+    "word": "stack",
+    "meaning": "スタック"
+  },
+  {
+    "word": "standalone",
+    "meaning": "スタンドアロンの"
+  },
+  {
+    "word": "startup",
+    "meaning": "起動、スタートアップ"
+  },
+  {
+    "word": "static",
+    "meaning": "静的な"
+  },
+  {
+    "word": "storage",
+    "meaning": "ストレージ"
+  },
+  {
+    "word": "stream",
+    "meaning": "ストリーム"
+  },
+  {
+    "word": "successfully",
+    "meaning": "正常に"
+  },
+  {
+    "word": "suffix",
+    "meaning": "接尾辞、サフィックス"
+  },
+  {
+    "word": "suppress",
+    "meaning": "表示しない"
+  },
+  {
+    "word": "synchronize",
+    "meaning": "同期する"
+  },
+  {
+    "word": "syntax",
+    "meaning": "構文、シンタックス"
+  },
+  {
+    "word": "terminate",
+    "meaning": "終了する"
+  },
+  {
+    "word": "termination",
+    "meaning": "終了"
+  },
+  {
+    "word": "terms",
+    "meaning": "利用条件"
+  },
+  {
+    "word": "third party",
+    "meaning": "サード・パーティー、第三者"
+  },
+  {
+    "word": "thread",
+    "meaning": "スレッド"
+  },
+  {
+    "word": "timestamp",
+    "meaning": "タイムスタンプ"
+  },
+  {
+    "word": "todo",
+    "meaning": "TODO、するべきこと"
+  },
+  {
+    "word": "toggle",
+    "meaning": "切り替える"
+  },
+  {
+    "word": "token",
+    "meaning": "トークン"
+  },
+  {
+    "word": "transaction",
+    "meaning": "トランザクション"
+  },
+  {
+    "word": "transfer",
+    "meaning": "転送する"
+  },
+  {
+    "word": "transform",
+    "meaning": "変換する、変形する"
+  },
+  {
+    "word": "transition",
+    "meaning": "遷移"
+  },
+  {
+    "word": "trigger",
+    "meaning": "トリガーする"
+  },
+  {
+    "word": "tweak",
+    "meaning": "微調整する"
+  },
+  {
+    "word": "typo",
+    "meaning": "入力ミス、タイポ"
+  },
+  {
+    "word": "unauthorized",
+    "meaning": "権限のない"
+  },
+  {
+    "word": "unavailable",
+    "meaning": "利用できない"
+  },
+  {
+    "word": "undefined",
+    "meaning": "未定義の"
+  },
+  {
+    "word": "unexpected",
+    "meaning": "予期しない"
+  },
+  {
+    "word": "unique",
+    "meaning": "一意の、固有の"
+  },
+  {
+    "word": "unknown",
+    "meaning": "不明の"
+  },
+  {
+    "word": "unnecessary",
+    "meaning": "不要な"
+  },
+  {
+    "word": "unresolved",
+    "meaning": "未解決の"
+  },
+  {
+    "word": "unsupported",
+    "meaning": "非対応の、サポートされない"
+  },
+  {
+    "word": "usage",
+    "meaning": "利用、使用"
+  },
+  {
+    "word": "username",
+    "meaning": "ユーザー名"
+  },
+  {
+    "word": "valid",
+    "meaning": "有効な"
+  },
+  {
+    "word": "validate",
+    "meaning": "（妥当性を）確認する、検証する"
+  },
+  {
+    "word": "validation",
+    "meaning": "検証"
+  },
+  {
+    "word": "verbose",
+    "meaning": "詳細な"
+  },
+  {
+    "word": "verify",
+    "meaning": "（正しいことを）確認する、検証する"
+  },
+  {
+    "word": "virtual",
+    "meaning": "仮想の"
+  },
+  {
+    "word": "visibility",
+    "meaning": "可視性、可視範囲"
+  },
+  {
+    "word": "visible",
+    "meaning": "可視の、表示できる"
+  },
+  {
+    "word": "whitespace",
+    "meaning": "空白、スペース"
+  },
+  {
+    "word": "wrap",
+    "meaning": "ラップする、（テキストを）折り返す"
+  },
+  {
+    "word": "wrapper",
+    "meaning": "ラッパー"
+  },
+  {
+    "word": "zip",
+    "meaning": "（ファイルを）圧縮する"
+  },
+  {
+    "word": "action",
+    "meaning": "アクション、操作"
+  },
+  {
+    "word": "activity",
+    "meaning": "アクティビティー、活動"
+  },
+  {
+    "word": "add",
+    "meaning": "追加する"
+  },
+  {
+    "word": "address",
+    "meaning": "アドレス、住所"
+  },
+  {
+    "word": "agree",
+    "meaning": "同意する"
+  },
+  {
+    "word": "area",
+    "meaning": "領域、エリア"
+  },
+  {
+    "word": "below",
+    "meaning": "下記に"
+  },
+  {
+    "word": "body",
+    "meaning": "本体、本文"
+  },
+  {
+    "word": "break",
+    "meaning": "中断する"
+  },
+  {
+    "word": "build",
+    "meaning": "構築する／ビルド"
+  },
+  {
+    "word": "button",
+    "meaning": "ボタン"
+  },
+  {
+    "word": "call",
+    "meaning": "呼び出す"
+  },
+  {
+    "word": "change",
+    "meaning": "変更する"
+  },
+  {
+    "word": "check",
+    "meaning": "確認する、チェックする"
+  },
+  {
+    "word": "child",
+    "meaning": "子"
+  },
+  {
+    "word": "choose",
+    "meaning": "選択する"
+  },
+  {
+    "word": "class",
+    "meaning": "クラス"
+  },
+  {
+    "word": "clean",
+    "meaning": "きれいな／きれいにする"
+  },
+  {
+    "word": "close",
+    "meaning": "閉じる"
+  },
+  {
+    "word": "compare",
+    "meaning": "比較する"
+  },
+  {
+    "word": "complete",
+    "meaning": "完了する／完全な"
+  },
+  {
+    "word": "copy",
+    "meaning": "コピーする／コピー"
+  },
+  {
+    "word": "correct",
+    "meaning": "正確な／訂正する"
+  },
+  {
+    "word": "create",
+    "meaning": "作成する"
+  },
+  {
+    "word": "describe",
+    "meaning": "説明する"
+  },
+  {
+    "word": "description",
+    "meaning": "説明"
+  },
+  {
+    "word": "detail",
+    "meaning": "詳細"
+  },
+  {
+    "word": "email",
+    "meaning": "メール／メールを送る"
+  },
+  {
+    "word": "event",
+    "meaning": "イベント、出来事"
+  },
+  {
+    "word": "example",
+    "meaning": "例"
+  },
+  {
+    "word": "extra",
+    "meaning": "余分な、追加の"
+  },
+  {
+    "word": "false",
+    "meaning": "誤りの、偽の"
+  },
+  {
+    "word": "final",
+    "meaning": "最終の"
+  },
+  {
+    "word": "find",
+    "meaning": "検索する"
+  },
+  {
+    "word": "finish",
+    "meaning": "終了する、完了する"
+  },
+  {
+    "word": "follow",
+    "meaning": "従う、フォローする"
+  },
+  {
+    "word": "form",
+    "meaning": "フォーム"
+  },
+  {
+    "word": "free",
+    "meaning": "空きの、無料の"
+  },
+  {
+    "word": "get",
+    "meaning": "獲得する、取得する"
+  },
+  {
+    "word": "group",
+    "meaning": "グループ"
+  },
+  {
+    "word": "health",
+    "meaning": "ヘルス、正常性"
+  },
+  {
+    "word": "improve",
+    "meaning": "改良する、改善する"
+  },
+  {
+    "word": "include",
+    "meaning": "含む、インクルードする"
+  },
+  {
+    "word": "information",
+    "meaning": "情報"
+  },
+  {
+    "word": "introduce",
+    "meaning": "導入する、紹介する"
+  },
+  {
+    "word": "join",
+    "meaning": "結合する"
+  },
+  {
+    "word": "key",
+    "meaning": "キー"
+  },
+  {
+    "word": "language",
+    "meaning": "言語"
+  },
+  {
+    "word": "later",
+    "meaning": "後で"
+  },
+  {
+    "word": "line",
+    "meaning": "行、線"
+  },
+  {
+    "word": "list",
+    "meaning": "リスト／一覧表示する"
+  },
+  {
+    "word": "make",
+    "meaning": "作成する"
+  },
+  {
+    "word": "match",
+    "meaning": "一致する"
+  },
+  {
+    "word": "menu",
+    "meaning": "メニュー"
+  },
+  {
+    "word": "message",
+    "meaning": "メッセージ"
+  },
+  {
+    "word": "model",
+    "meaning": "モデル、型"
+  },
+  {
+    "word": "move",
+    "meaning": "移動する"
+  },
+  {
+    "word": "name",
+    "meaning": "名前"
+  },
+  {
+    "word": "next",
+    "meaning": "次の"
+  },
+  {
+    "word": "number",
+    "meaning": "数"
+  },
+  {
+    "word": "object",
+    "meaning": "オブジェクト、物体、対象"
+  },
+  {
+    "word": "open",
+    "meaning": "開く／開いた"
+  },
+  {
+    "word": "parent",
+    "meaning": "親"
+  },
+  {
+    "word": "password",
+    "meaning": "パスワード"
+  },
+  {
+    "word": "play",
+    "meaning": "再生する"
+  },
+  {
+    "word": "post",
+    "meaning": "書き込む／投稿"
+  },
+  {
+    "word": "prepare",
+    "meaning": "準備する"
+  },
+  {
+    "word": "problem",
+    "meaning": "問題"
+  },
+  {
+    "word": "product",
+    "meaning": "製品、プロダクト"
+  },
+  {
+    "word": "read",
+    "meaning": "読み取る"
+  },
+  {
+    "word": "return",
+    "meaning": "戻す、返す"
+  },
+  {
+    "word": "rule",
+    "meaning": "ルール、規則"
+  },
+  {
+    "word": "run",
+    "meaning": "実行する"
+  },
+  {
+    "word": "section",
+    "meaning": "セクション、部分"
+  },
+  {
+    "word": "see",
+    "meaning": "見る、参照する"
+  },
+  {
+    "word": "send",
+    "meaning": "送信する"
+  },
+  {
+    "word": "service",
+    "meaning": "サービス"
+  },
+  {
+    "word": "set",
+    "meaning": "設定する"
+  },
+  {
+    "word": "show",
+    "meaning": "表示する"
+  },
+  {
+    "word": "size",
+    "meaning": "大きさ"
+  },
+  {
+    "word": "software",
+    "meaning": "ソフトウェア"
+  },
+  {
+    "word": "space",
+    "meaning": "スペース、空白"
+  },
+  {
+    "word": "start",
+    "meaning": "開始する"
+  },
+  {
+    "word": "statement",
+    "meaning": "ステートメント、文"
+  },
+  {
+    "word": "stop",
+    "meaning": "停止する"
+  },
+  {
+    "word": "style",
+    "meaning": "スタイル"
+  },
+  {
+    "word": "test",
+    "meaning": "テスト／テストする"
+  },
+  {
+    "word": "traffic",
+    "meaning": "トラフィック、通信（量）"
+  },
+  {
+    "word": "tree",
+    "meaning": "木、ツリー"
+  },
+  {
+    "word": "true",
+    "meaning": "正しい、真の"
+  },
+  {
+    "word": "use",
+    "meaning": "使う／使用"
+  },
+  {
+    "word": "useful",
+    "meaning": "便利な"
+  },
+  {
+    "word": "user",
+    "meaning": "ユーザー"
+  },
+  {
+    "word": "visit",
+    "meaning": "訪問する、アクセスする"
+  },
+  {
+    "word": "wait",
+    "meaning": "待機する"
+  },
+  {
+    "word": "website",
+    "meaning": "ウェブサイト"
+  },
+  {
+    "word": "window",
+    "meaning": "ウィンドウ"
+  },
+  {
+    "word": "write",
+    "meaning": "書き込む"
+  },
+  {
+    "word": "you",
+    "meaning": "あなた、ユーザー"
+  },
+  {
+    "word": "your",
+    "meaning": "あなたの、ユーザーの"
+  }
+]

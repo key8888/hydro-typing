@@ -6,7 +6,7 @@
 // - param, Types: APIの入力パラメータを定義するデコレータ
 // - PRIV: ユーザー権限
 import {
-    _, Context,db, DiscussionNotFoundError, DocumentModel,
+    _, Context, db, DiscussionNotFoundError, DocumentModel,
     Handler, ObjectId, OplogModel,
     param, PRIV, Types, UserModel,
 } from 'hydrooj';
@@ -275,30 +275,56 @@ class BlogEditHandler extends BlogHandler {
 interface TypingScore {
     _id?: ObjectId;
     uid: number;
-    score: number;
+    score: number;  // WPMを保存
     createdAt: Date;
+}
+
+interface WordItem {
+    word: string;
+    meaning?: string;
 }
 
 class TypingHandler extends Handler {
     async get() {
 
         // JSONファイルのパスを組み立てる
-        const filePath = join(__dirname, 'typing_words', 'words_basic.json');
+        const filePath = join(__dirname, 'typing_words', 'words.json');
 
         // ファイルを読み込んでパース
         const raw = readFileSync(filePath, 'utf-8');
-        const words: string[] = JSON.parse(raw);
+
+        // 期待形式 [{word, meaning}] をサニタイズしつつ解析
+        let parsed: any;
+        try {
+            parsed = JSON.parse(raw);
+        } catch {
+            parsed = [];
+        }
+
+        const words: WordItem[] = Array.isArray(parsed)
+            ? parsed
+                .filter((x) => x && typeof x.word === 'string')
+                .map((x) => ({
+                    word: String(x.word),
+                    meaning: typeof x.meaning === 'string' ? String(x.meaning) : '',
+                }))
+            : [];
+
+
+        // wordsの0~300番目をランダムに50単語のみ抽出
+        const randomWords = words.slice(0, 300).sort(() => 0.5 - Math.random()).slice(0, 50);
+        console.log(randomWords);
 
         // ユーザーID（ログイン必須にしたい場合）
         const uid = this.user?._id || 0;
 
         // DBから履歴を最新10件取る
         const coll = this.ctx.db.collection<TypingScore>('typingScores');
-        const history = await coll.find({ uid }).sort({ createdAt: -1 }).limit(10).toArray();
+        const history = await coll.find({ uid }).sort({ createdAt: -1 }).limit(5).toArray();
 
         this.response.template = 'typing.html';
         this.response.body = {
-            words: JSON.stringify(words),
+            words: JSON.stringify(randomWords),
             history,
         };
     }
