@@ -1,0 +1,95 @@
+/* ===== タイピング画面のスタイル ===== */
+.typing-wrap {
+  position: relative;
+  text-align: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.typing-hud {
+  position: absolute;
+  left: 0.5rem;
+  top: -0.25rem;
+  font-size: .9rem;
+  color: #666;
+  user-select: none;
+}
+
+.typing-word {
+  display: inline-block;
+  font-size: 2.2rem;
+  letter-spacing: .05em;
+  line-height: 1.6;
+  margin: 1.25rem 0 .25rem;
+}
+
+.typing-meaning {
+  margin: 0 0 .75rem;
+  font-size: 1.05rem;
+  color: #4b5563;
+}
+
+.char {
+  padding: 0 .02em;
+  border-radius: .25rem;
+}
+.char--todo { color: #222; opacity: .6; }
+.char--correct { color: #15803d; }
+.char--wrong { color: #b91c1c; }
+.char--current {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.typing-end {
+  display: none;
+  margin-top: 1.25rem;
+}
+.typing-end__score {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: .25rem 0 1rem;
+}
+
+/* ===== 履歴 ===== */
+.history-card {
+  margin-top: 2rem;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+.history-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 1rem;
+  background: linear-gradient(180deg, #fafafa, #f5f5f5);
+  border-bottom: 1px solid #e5e7eb;
+}
+.history-title { font-size: 1.05rem; font-weight: 600; color: #111827; }
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.history-table thead th {
+  text-align: left;
+  font-size: .9rem;
+  color: #6b7280;
+  font-weight: 600;
+  padding: .7rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+  position: sticky; top: 0;
+}
+.history-table tbody tr:nth-child(odd) { background: #fcfcfd; }
+.history-table tbody tr:nth-child(even) { background: #ffffff; }
+.history-table td {
+  padding: .75rem 1rem;
+  font-size: .95rem;
+  color: #111827;
+}
+.history-empty {
+  padding: 1rem;
+  color: #6b7280;
+  text-align: center;
+}
+.section__header { margin-bottom: .25rem; }

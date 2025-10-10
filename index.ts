@@ -272,6 +272,16 @@ class BlogEditHandler extends BlogHandler {
 
 //     };
 // }
+
+class PublicFileHandler extends Handler {
+  async get({ filename }: { filename: string }) {
+    const path = join(__dirname, 'public', filename);
+    if (filename.endsWith('.js')) this.response.type = 'application/javascript';
+    if (filename.endsWith('.css')) this.response.type = 'text/css';
+    this.response.body = readFileSync(path, 'utf-8');
+  }
+}
+
 interface TypingScore {
     _id?: ObjectId;
     uid: number;
@@ -344,6 +354,7 @@ class TypingHandler extends Handler {
     }
 }
 
+
 // この apply 関数でルートやUIを設定する
 export async function apply(ctx: Context) {
     ctx.Route('blog_main', '/blog/:uid', BlogUserHandler);
@@ -352,6 +363,7 @@ export async function apply(ctx: Context) {
     ctx.Route('blog_edit', '/blog/:uid/:did/edit', BlogEditHandler, PRIV.PRIV_USER_PROFILE);
 
     ctx.Route('typing_main', '/typing', TypingHandler, PRIV.PRIV_USER_PROFILE);
+    ctx.Route('public_files', '/public/:filename', PublicFileHandler);
 
     // ユーザーのドロップダウンに「Blog」メニューを追加
     ctx.injectUI('UserDropdown', 'blog_main', (h) => ({

@@ -1,142 +1,8 @@
 {% extends "layout/basic.html" %}
 {% block content %}
-<style>
-  /* ===== タイピング画面のスタイル ===== */
-  .typing-wrap {
-    position: relative;
-    text-align: center;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  }
 
-  .typing-hud {
-    position: absolute;
-    left: 0.5rem;
-    top: -0.25rem;
-    font-size: .9rem;
-    color: #666;
-    user-select: none;
-  }
-
-  .typing-word {
-    display: inline-block;
-    font-size: 2.2rem;
-    letter-spacing: .05em;
-    line-height: 1.6;
-    margin: 1.25rem 0 .25rem;
-  }
-
-  .typing-meaning {
-    margin: 0 0 .75rem;
-    font-size: 1.05rem;
-    color: #4b5563;
-    /* gray-600 */
-  }
-
-  .char {
-    padding: 0 .02em;
-    border-radius: .25rem;
-  }
-
-  .char--todo {
-    color: #222;
-    opacity: .6;
-  }
-
-  .char--correct {
-    color: #15803d;
-  }
-
-  /* green-700 */
-  .char--wrong {
-    color: #b91c1c;
-  }
-
-  /* red-700  */
-  .char--current {
-    text-decoration: underline;
-    text-underline-offset: .2em;
-  }
-
-  .typing-end {
-    display: none;
-    margin-top: 1.25rem;
-  }
-
-  .typing-end__score {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: .25rem 0 1rem;
-  }
-
-  /* ===== 履歴テーブルのスタイル（見やすさ重視） ===== */
-  .history-card {
-    margin-top: 2rem;
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
-    /* gray-200 */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
-    overflow: hidden;
-  }
-
-  .history-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: .9rem 1rem;
-    background: linear-gradient(180deg, #fafafa, #f5f5f5);
-    border-bottom: 1px solid #e5e7eb;
-  }
-
-  .history-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
-  }
-
-  .history-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-  }
-
-  .history-table thead th {
-    text-align: left;
-    font-size: .9rem;
-    color: #6b7280;
-    /* gray-500 */
-    font-weight: 600;
-    padding: .7rem 1rem;
-    border-bottom: 1px solid #e5e7eb;
-    background: #fff;
-    position: sticky;
-    top: 0;
-  }
-
-  .history-table tbody tr:nth-child(odd) {
-    background: #fcfcfd;
-  }
-
-  .history-table tbody tr:nth-child(even) {
-    background: #ffffff;
-  }
-
-  .history-table td {
-    padding: .75rem 1rem;
-    font-size: .95rem;
-    color: #111827;
-  }
-
-  .history-empty {
-    padding: 1rem;
-    color: #6b7280;
-    text-align: center;
-  }
-
-  .section__header {
-    margin-bottom: .25rem;
-  }
-</style>
+<!-- 外部CSS -->
+<link rel="stylesheet" href="/public/typing.css">
 
 <div class="row">
   <div class="medium-12 columns">
@@ -147,7 +13,7 @@
       </div>
 
       <div class="section__body typing-wrap">
-        <!-- 残り単語数 HUD のそばに追加 -->
+        <!-- 🔊 トグル -->
         <div style="position:absolute; right:.5rem; top:-.25rem; font-size:.9rem; color:#666;">
           <label style="cursor:pointer; user-select:none;">
             <input id="tts-toggle" type="checkbox" checked style="vertical-align:middle; margin-right:.25rem;">
@@ -155,16 +21,16 @@
           </label>
         </div>
 
-
         <!-- 残り単語数 HUD -->
         <div id="hud-remaining" class="typing-hud">Left: - / -</div>
 
         <!-- 単語表示 -->
         <div id="word-display" class="typing-word"></div>
+
         <!-- 日本語訳 -->
         <div id="meaning-display" class="typing-meaning"></div>
 
-        <!-- 終了画面（WPM表示＆保存フォーム） -->
+        <!-- 終了画面 -->
         <div id="end-screen" class="typing-end">
           <h2 class="section__title" style="margin-bottom:.25rem;">{{ _('Finished!') }}</h2>
           <div class="typing-end__score">
@@ -192,10 +58,7 @@
           {% if history and history.length %}
           <table class="history-table">
             <thead>
-              <tr>
-                <th>{{ _('Date') }}</th>
-                <th>WPM</th>
-              </tr>
+              <tr><th>{{ _('Date') }}</th><th>WPM</th></tr>
             </thead>
             <tbody id="history-body">
               {% for h in history %}
@@ -215,205 +78,11 @@
   </div>
 </div>
 
+<!-- 外部JS -->
 <script>
-  /* ====== Web Speech (TTS) 発音 ====== */
-  let ttsEnabled = true;
-  let ttsVoice = null;
-
-  // 言語: 英語系を優先して選ぶ
-  function pickEnglishVoice(voices) {
-    if (!voices || !voices.length) return null;
-    const byLang = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
-    // 名前でそれっぽいのを優先（任意）
-    const preferNames = ['Google US English', 'Samantha', 'Alex', 'Microsoft Aria', 'Microsoft Zira'];
-    for (const name of preferNames) {
-      const hit = byLang.find(v => v.name.includes(name));
-      if (hit) return hit;
-    }
-    return byLang[0] || voices[0];
-  }
-
-  function initVoices() {
-    try {
-      const voices = window.speechSynthesis?.getVoices?.() || [];
-      ttsVoice = pickEnglishVoice(voices);
-    } catch { }
-  }
-
-  // 音声再生
-  function speakWord(text) {
-    if (!ttsEnabled) return;
-    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) return;
-    if (!text) return;
-
-    // 直前の発話を止めてから再生（重なり防止）
-    try { window.speechSynthesis.cancel(); } catch { }
-
-    const utt = new SpeechSynthesisUtterance(text);
-    if (ttsVoice) utt.voice = ttsVoice;
-    // 聞き取りやすい調整（お好みで）
-    utt.rate = 0.9;  // 少しゆっくり
-    utt.pitch = 1.0;
-    utt.volume = 1.0;
-
-    try { window.speechSynthesis.speak(utt); } catch { }
-  }
-
-  // 端末によっては voices が非同期ロード
-  if ('speechSynthesis' in window) {
-    initVoices();
-    window.speechSynthesis.addEventListener?.('voiceschanged', initVoices);
-  }
-
-  // トグル
-  document.getElementById('tts-toggle')?.addEventListener('change', (e) => {
-    ttsEnabled = e.target.checked;
-    if (!ttsEnabled && window.speechSynthesis) {
-      try { window.speechSynthesis.cancel(); } catch { }
-    } else {
-      // 有効化時、現在の単語を復唱してあげると親切
-      const cur = items[currentWordIndex];
-      if (cur?.word) speakWord(cur.word);
-    }
-  });
-
-
-
-  /* ====== 単語の表示およびタイピングの動作関連 ====== */
-  // [{word, meaning}] が来る
+  // サーバー側からデータ受け取り
   const items = {{ words | safe }};
-  const totalWords = items.length;
-
-  let currentWordIndex = 0;
-  let currentCharIndex = 0;
-  let correctChars = 0;
-
-  let startedAt = null;
-  let finishedAt = null;
-  let waitingNext = false;
-
-  const hudRemaining = document.getElementById('hud-remaining');
-  const wordDisplay = document.getElementById('word-display');
-  const meaningEl = document.getElementById('meaning-display');
-  const endScreen = document.getElementById('end-screen');
-  const finalWpmEl = document.getElementById('final-wpm');
-  const finalCharsEl = document.getElementById('final-chars');
-  const finalTimeEl = document.getElementById('final-time');
-  const scoreInput = document.getElementById('score-input');
-
-  function pad2(n) { return n.toString().padStart(2, '0'); }
-
-  function renderRemaining() {
-    const left = Math.max(totalWords - currentWordIndex, 0);
-    hudRemaining.textContent = `Left: ${left} / ${totalWords}`;
-  }
-
-  function renderWord(showWrong = false) {
-    const cur = items[currentWordIndex] || { word: '', meaning: '' };
-    const word = cur.word || '';
-    const meaning = cur.meaning || '';
-
-    let html = '';
-    for (let i = 0; i < word.length; i++) {
-      const ch = word[i];
-      if (i < currentCharIndex) {
-        html += `<span class="char char--correct">${ch}</span>`;
-      } else if (i === currentCharIndex) {
-        const wrong = showWrong;
-        html += `<span class="char ${wrong ? 'char--wrong' : 'char--todo'} char--current">${ch}</span>`;
-      } else {
-        html += `<span class="char char--todo">${ch}</span>`;
-      }
-    }
-    wordDisplay.innerHTML = html;
-    meaningEl.textContent = meaning; // ← 日本語訳はテキストとして表示
-    renderRemaining();
-  }
-
-  function finish() {
-    finishedAt = Date.now();
-    const elapsedMs = Math.max(1, finishedAt - (startedAt ?? finishedAt));
-    const minutes = elapsedMs / 60000;
-    const wpm = Math.round((correctChars / 5) / minutes);
-
-    wordDisplay.style.display = 'none';
-    meaningEl.style.display = 'none';
-    endScreen.style.display = 'block';
-
-    finalWpmEl.textContent = String(wpm);
-    finalCharsEl.textContent = String(correctChars);
-    finalTimeEl.textContent = (elapsedMs / 1000).toFixed(1);
-    scoreInput.value = String(wpm);
-  }
-
-  function nextWord() {
-    currentWordIndex++;
-    currentCharIndex = 0;
-    waitingNext = false;
-    if (currentWordIndex >= totalWords) {
-      finish();
-    } else {
-      renderWord(false);
-    }
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (waitingNext || endScreen.style.display === 'block') return;
-
-    // 最初のキーで計時開始（Shift 等は除外）
-    if (!startedAt && e.key && e.key.length === 1) {
-      startedAt = Date.now();
-
-      // ← 初回のユーザー操作の機会で発音（iOSの自動再生制限に対応）
-      const cur0 = items[currentWordIndex];
-      if (cur0?.word) speakWord(cur0.word);
-    }
-
-    const cur = items[currentWordIndex] || { word: '' };
-    const word = cur.word || '';
-    const expected = word[currentCharIndex];
-    if (!expected) return;
-
-    // 1文字キー以外は無視（Shift/Alt/Ctrlなど）
-    if (!e.key || e.key.length !== 1) return;
-
-    const pressed = e.key;
-    if (pressed.toLowerCase() === expected.toLowerCase()) {
-      currentCharIndex++;
-      correctChars++;
-      renderWord(false);
-
-      if (currentCharIndex === word.length) {
-        waitingNext = true;
-        // 1秒見せた後、次の単語へ
-        setTimeout(() => {
-          nextWord();
-          // 次の単語に切り替えた直後に発音
-          const curNext = items[currentWordIndex];
-          if (curNext?.word) speakWord(curNext.word);
-        }, 1000);
-      }
-    } else {
-      renderWord(true); // 現在文字を赤で表示
-    }
-  });
-
-  // 初期描画
-  renderWord(false);
-
-  /* 履歴の日付を "Sun Oct 05 2025 23:32" に整形 */
-  (function formatHistoryDates() {
-    const cells = document.querySelectorAll('.js-date');
-    const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    function fmt(d) {
-      return `${weekday[d.getDay()]} ${month[d.getMonth()]} ${pad2(d.getDate())} ${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
-    }
-    for (const td of cells) {
-      const raw = td.textContent?.trim() ?? '';
-      const d = new Date(raw);
-      if (!isNaN(d.getTime())) td.textContent = fmt(d);
-    }
-  })();
 </script>
+<script src="/public/typing.js"></script>
+
 {% endblock %}
