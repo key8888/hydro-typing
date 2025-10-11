@@ -13,16 +13,24 @@
       </div>
 
       <div class="section__body typing-wrap">
-        <!-- 🔊 トグル -->
-        <div style="position:absolute; right:.5rem; top:-.25rem; font-size:.9rem; color:#666;">
-          <label style="cursor:pointer; user-select:none;">
-            <input id="tts-toggle" type="checkbox" checked style="vertical-align:middle; margin-right:.25rem;">
-            🔊 発音
-          </label>
-        </div>
+        <!-- 🔧 ここから新HUD -->
+        <div class="hud-deck">
+          <!-- 発音トグル（左） -->
+          <div class="badge-card" id="tts-card" title="発音のON/OFF">
+            <label class="toggle">
+              <input id="tts-toggle" type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="badge-title">🔊 発音</span>
+          </div>
 
-        <!-- 残り単語数 HUD -->
-        <div id="hud-remaining" class="typing-hud">Left: - / -</div>
+          <!-- 残り単語数（右） -->
+          <div class="badge-card" id="left-card">
+            <span class="badge-title">Left</span>
+            <span id="hud-remaining" class="badge-count">- / -</span>
+          </div>
+        </div>
+        <!-- 🔧 ここまで新HUD -->
 
         <!-- 単語表示 -->
         <div id="word-display" class="typing-word"></div>
@@ -58,13 +66,27 @@
           {% if history and history.length %}
           <table class="history-table">
             <thead>
-              <tr><th>{{ _('Date') }}</th><th>WPM</th></tr>
+              <tr>
+                <th>{{ _('Date') }}</th>
+                <th>WPM</th> <!-- アクションもこの列に入れる -->
+              </tr>
             </thead>
             <tbody id="history-body">
               {% for h in history %}
               <tr>
                 <td class="js-date">{{ h.createdAt }}</td>
-                <td><strong>{{ h.score }}</strong></td>
+                <td>
+                  <span class="wpm-badge">{{ h.score }}</span>
+                  <span class="history-actions">
+                    <!-- フォームで削除（JS不要） -->
+                    <form method="post" action="/typing/delete" style="display:inline;">
+                      <input type="hidden" name="id" value="{{ h._id }}">
+                      <button type="submit" class="btn btn--ghost-danger">
+                        <span class="icon-trash"></span> Delete
+                      </button>
+                    </form>
+                  </span>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -75,6 +97,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
 

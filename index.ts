@@ -322,7 +322,7 @@ class TypingHandler extends Handler {
 
 
         // wordsの0~300番目をランダムに50単語のみ抽出
-        const randomWords = words.slice(0, 300).sort(() => 0.5 - Math.random()).slice(0, 50);
+        const randomWords = words.slice(0, 300).sort(() => 0.5 - Math.random()).slice(0, 5);
         console.log(randomWords);
 
         // ユーザーID（ログイン必須にしたい場合）

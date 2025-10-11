@@ -61,7 +61,8 @@ const scoreInput = document.getElementById('score-input');
 
 function pad2(n){return n.toString().padStart(2,'0');}
 function renderRemaining(){
-  hudRemaining.textContent = `Left: ${Math.max(totalWords - currentWordIndex,0)} / ${totalWords}`;
+  // left単語数
+  hudRemaining.textContent = `: ${Math.max(totalWords - currentWordIndex,0)} / ${totalWords}`;
 }
 function renderWord(showWrong=false){
   const cur = items[currentWordIndex] || {word:'',meaning:''};
