@@ -6,12 +6,12 @@
 // - param, Types: APIの入力パラメータを定義するデコレータ
 // - PRIV: ユーザー権限
 import {
-    _, Context, db, DiscussionNotFoundError, DocumentModel,
+    _, Context, DiscussionNotFoundError, DocumentModel,
     Handler, ObjectId, OplogModel,
     param, PRIV, Types, UserModel,
 } from 'hydrooj';
 import { readFileSync } from 'fs'
-import { join } from 'path';
+import { join, normalize } from 'path';
 
 import type { Filter, NumberKeys } from 'hydrooj';
 import type { UpdateFilter } from 'mongodb';
@@ -253,34 +253,33 @@ class BlogEditHandler extends BlogHandler {
     }
 }
 
-// // タイピングページ
-// class TypingHandler extends Handler {
-//     async get() {
-//         // JSONファイルのパスを組み立てる
-//         const filePath = join(__dirname, 'typing_words', 'words_basic.json');
+// 公開用ファイルハンドラー（CSSやJSを配信）
 
-//         // ファイルを読み込んでパース
-//         const raw = readFileSync(filePath, 'utf-8');
-//         const words: string[] = JSON.parse(raw);
-
-//         this.response.template = 'typing.html';
-//         this.response.body = {
-//             // JS 側でそのまま配列に使えるように文字列化して渡す
-//             words: JSON.stringify(words),
-//         };
-
-
-//     };
+// class PublicFileHandler extends Handler {
+//   async get({ filename }: { filename: string }) {
+//     const path = join(__dirname, 'public', filename);
+//     if (filename.endsWith('.js')) this.response.type = 'application/javascript';
+//     if (filename.endsWith('.css')) this.response.type = 'text/css';
+//     this.response.body = readFileSync(path, 'utf-8');
+//   }
 // }
+
 
 class PublicFileHandler extends Handler {
   async get({ filename }: { filename: string }) {
-    const path = join(__dirname, 'public', filename);
-    if (filename.endsWith('.js')) this.response.type = 'application/javascript';
+    const base = join(__dirname, 'public');
+    const p = normalize(join(base, filename));
+    if (!p.startsWith(base)) { this.status = 403; this.response.body = 'Forbidden'; return; }
     if (filename.endsWith('.css')) this.response.type = 'text/css';
-    this.response.body = readFileSync(path, 'utf-8');
+    if (filename.endsWith('.js'))  this.response.type = 'application/javascript';
+    this.response.body = readFileSync(p, 'utf-8');
   }
 }
+
+
+/* ===============================
+        タイピング機能
+=============================== */
 
 interface TypingScore {
     _id?: ObjectId;
@@ -354,6 +353,17 @@ class TypingHandler extends Handler {
     }
 }
 
+/* ===============================
+        コードゲーム機能
+=============================== */
+
+class CodeGamePage extends Handler {
+  async get() {
+    this.response.template = 'codegame.html';
+    this.response.body = {};
+  }
+}
+
 
 // この apply 関数でルートやUIを設定する
 export async function apply(ctx: Context) {
@@ -363,12 +373,20 @@ export async function apply(ctx: Context) {
     ctx.Route('blog_edit', '/blog/:uid/:did/edit', BlogEditHandler, PRIV.PRIV_USER_PROFILE);
 
     ctx.Route('typing_main', '/typing', TypingHandler, PRIV.PRIV_USER_PROFILE);
+    ctx.Route('codegame_main', '/codegame', CodeGamePage);
     ctx.Route('public_files', '/public/:filename', PublicFileHandler);
 
     // ユーザーのドロップダウンに「Blog」メニューを追加
     ctx.injectUI('UserDropdown', 'blog_main', (h) => ({
         icon: 'book',
         displayName: 'Blog',
+        uid: h.user._id.toString(),
+    }), PRIV.PRIV_USER_PROFILE);
+    // Nav に Typing メニューを追加
+    ctx.injectUI('Nav', 'typing_main', (h) => ({
+        icon: 'shit',
+        displayName: 'Typing',
+        prefix: 'typing',
         uid: h.user._id.toString(),
     }), PRIV.PRIV_USER_PROFILE);
 

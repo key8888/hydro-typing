@@ -1,0 +1,128 @@
+{% extends "layout/basic.html" %}
+{% block content %}
+
+<!-- three.js を CDN + importmap で（ご指定どおり） -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+  }
+}
+</script>
+
+<link rel="stylesheet" href="/public/codegame.css"/>
+
+<div class="row">
+  <div class="medium-12 columns">
+    <div class="section">
+      <div class="section__header">
+        <h1 class="section__title">Code Game: Guide the Ball</h1>
+      </div>
+
+      <div class="cg-wrap"><!-- 左右を入れ替え（左：実演／右：コード） -->
+        <!-- 左：実演（three.js） -->
+        <div class="cg-left">
+          <div class="cg-stage">
+            <canvas id="three-canvas"></canvas>
+            <div class="cg-hud">
+              <span id="hud-status">Ready</span>
+              <span id="hud-time">0.0s</span>
+            </div>
+          </div>
+          <div class="cg-log" id="log"></div>
+        </div>
+
+        <!-- 右：プログラミングエリア -->
+        <div class="cg-right">
+          <div class="cg-toolbar">
+            <button id="runBtn" class="primary rounded button">Run ▶</button>
+            <button id="clearLogBtn" class="button">Clear Log</button>
+          </div>
+          <textarea id="editor" spellcheck="false"></textarea>
+          <p class="cg-help">
+            <b>API:</b>
+            <code>setDirection(deg | {x,z})</code>
+            <code>setSpeed(number)</code>,
+            <code>startGame()</code>,
+            <code>onTick(fn)</code><br/>
+            例：角度で指定 → <code>api.setDirection(30)</code>（度数法） / ベクトル → <code>api.setDirection({x:1, z:0})</code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- three 初期化（renderer/scene/camera/ゲーム状態） -->
+<script type="module" src="/public/codegame_preset.js"></script>
+
+<!-- ランタイム（Run押下でのみ実行） -->
+<script type="module">
+  // DOM が描画されてからイベントを結びます
+  window.addEventListener('DOMContentLoaded', () => {
+    const logEl   = document.getElementById('log');
+    const timeEl  = document.getElementById('hud-time');
+    const statusEl= document.getElementById('hud-status');
+    const editor  = document.getElementById('editor');
+    const runBtn  = document.getElementById('runBtn');
+    const clearBtn= document.getElementById('clearLogBtn');
+
+    // スターターコード（ユーザーに見せる最小例）
+    const starter = `// 目標: ボールをゴールへ導け！
+// API は api.* で利用できます。
+// - api.setDirection(deg | {x, z})
+// - api.setSpeed(number)            // 推奨 1.0〜5.0
+// - api.startGame()                 // 1ラウンド開始
+// - api.onTick((dt)=>{ ... })       // 毎フレーム処理（任意）
+
+api.setDirection(25); // 角度（度数法）。右向き0°, 上向きは -90°
+api.setSpeed(2.5);    // 速度
+api.startGame();      // ラウンド開始！`;
+
+
+    editor.value = starter;
+
+    function log(msg, isErr=false){
+      const pre = document.createElement('pre');
+      pre.textContent = String(msg);
+      pre.className = isErr ? 'cg-log-err' : '';
+      logEl.appendChild(pre);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+    function clearLog(){ logEl.textContent=''; }
+
+    // 実行：Run ボタンでのみユーザーコードを評価
+    function runUserCode(){
+      clearLog();
+      const code = editor.value;
+      const api  = window.__cg?.api;
+      if (!api) { log('Renderer not ready.', true); return; }
+      try {
+        // onTick をリセット（前回実行のフック解除）
+        api.onTick(null);
+        // 実行
+        const fn = new Function('api', code);
+        fn(api);
+        log('✓ Run complete');
+      } catch(e){
+        log(e.stack || e.message || String(e), true);
+      }
+    }
+
+    runBtn.addEventListener('click', runUserCode);
+    clearBtn.addEventListener('click', clearLog);
+
+    // HUD 更新（preset 側が dispacher を用意）
+    const cg = window.__cg;
+    cg.onHud = (t, state) => {
+      timeEl.textContent  = `${t.toFixed(1)}s`;
+      statusEl.textContent= state;
+    };
+
+    // 初回は実行しない（要求 1 対応）
+    // （必要ならここで runUserCode() を呼ばないこと）
+  });
+</script>
+
+{% endblock %}

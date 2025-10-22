@@ -1,0 +1,23 @@
+/* 左右を 1:1 の 2 カラム（小画面では縦積み） */
+.cg-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-height: 70vh; }
+.cg-left, .cg-right { display: flex; flex-direction: column; min-height: 60vh; }
+
+/* ステージ（左） */
+.cg-stage { position: relative; flex: 1; border: 1px solid #d4d7dd; border-radius: 8px; overflow: hidden; background: #0b1020; }
+#three-canvas { width: 100%; height: 100%; display: block; }
+.cg-hud { position: absolute; left: 10px; top: 10px; display: flex; gap: 10px; padding: 4px 8px; font: 600 12px/1 ui-sans-serif,system-ui; color: #e9f2ff; background: rgba(15,20,35,.5); border: 1px solid rgba(255,255,255,.08); border-radius: 6px; }
+#hud-status { color: #ffd166; }
+#hud-time { color: #a8ffcf; }
+
+/* ログ */
+.cg-log { margin-top: 8px; height: 120px; overflow: auto; background: #0e1222; color: #a8c1ff; border: 1px solid #d4d7dd; border-radius: 8px; padding: 6px; }
+.cg-log pre { margin: 0; white-space: pre-wrap; }
+.cg-log-err { color: #ffb4c4; }
+
+/* コード（右） */
+.cg-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+#editor { flex: 1; width: 100%; font: 13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  padding: 12px; border: 1px solid #d4d7dd; border-radius: 8px; resize: vertical; background: #0e1222; color: #e8f0ff; }
+.cg-help { color: #6b7280; margin-top: 8px; font-size: 12px; }
+
+@media (max-width: 980px) { .cg-wrap { grid-template-columns: 1fr; } }
