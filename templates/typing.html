@@ -13,6 +13,18 @@
       </div>
 
       <div class="section__body typing-wrap">
+        <div class="level-bar">
+          <div class="level-tabs" role="tablist">
+            <button class="level-tab is-active" data-level="beginner">初級</button>
+            <button class="level-tab" data-level="intermediate">中級</button>
+            <button class="level-tab" data-level="advanced">上級</button>
+          </div>
+          <div class="level-caption">
+            <div id="level-title" class="level-title">初級 · 30 words</div>
+            <p id="level-description">0〜300の単語からランダムに出題します。</p>
+          </div>
+        </div>
+
         <!-- 🔧 ここから新HUD -->
         <div class="hud-deck">
           <!-- 発音トグル（左） -->
@@ -32,26 +44,34 @@
         </div>
         <!-- 🔧 ここまで新HUD -->
 
-        <!-- 単語表示 -->
-        <div id="word-display" class="typing-word"></div>
+        <div class="typing-panel">
+          <!-- 単語表示 -->
+          <div id="word-display" class="typing-word"></div>
 
-        <!-- 日本語訳 -->
-        <div id="meaning-display" class="typing-meaning"></div>
+          <!-- 日本語訳 -->
+          <div id="meaning-display" class="typing-meaning"></div>
 
-        <!-- 終了画面 -->
-        <div id="end-screen" class="typing-end">
-          <h2 class="section__title" style="margin-bottom:.25rem;">{{ _('Finished!') }}</h2>
-          <div class="typing-end__score">
-            WPM: <span id="final-wpm">0</span>
+          <!-- 終了画面 -->
+          <div id="end-screen" class="typing-end">
+            <h2 class="section__title" style="margin-bottom:.25rem;">{{ _('Finished!') }}</h2>
+            <div class="typing-end__score">
+              WPM: <span id="final-wpm">0</span>
+            </div>
+            <form id="score-form" method="post" action="/typing" style="margin-top:.5rem;">
+              <input type="hidden" name="score" id="score-input">
+              <button type="submit" class="rounded primary button">{{ _('Save score') }}</button>
+            </form>
+            <div style="margin-top:.5rem; color:#6b7280; font-size:.9rem;">
+              <span>Chars: <span id="final-chars">0</span></span> ·
+              <span>Time: <span id="final-time">0.0</span>s</span>
+            </div>
+            <button id="restart-btn" type="button" class="ghost-btn">同じレベルでもう一度</button>
           </div>
-          <form id="score-form" method="post" action="/typing" style="margin-top:.5rem;">
-            <input type="hidden" name="score" id="score-input">
-            <button type="submit" class="rounded primary button">{{ _('Save score') }}</button>
-          </form>
-          <div style="margin-top:.5rem; color:#6b7280; font-size:.9rem;">
-            <span>Chars: <span id="final-chars">0</span></span> ·
-            <span>Time: <span id="final-time">0.0</span>s</span>
-          </div>
+        </div>
+        <div class="hint-row">
+          <div class="hint-chip">タイプ開始でタイマーが動きます</div>
+          <div class="hint-chip">Enter不要、正解で次に進みます</div>
+          <div class="hint-chip">レベルはいつでも切り替え可能</div>
         </div>
       </div>
     </div>
