@@ -1,14 +1,12 @@
 import { Context, PRIV } from 'hydrooj';
 import { applyBlog } from './features/blog';
 import { applyTyping } from './features/typing';
-import { applyCodeGame } from './features/codegame';
 import { PublicFileHandler } from './utils/public';
 
 export async function apply(ctx: Context) {
   // 各機能のルートを登録
   applyBlog(ctx);
   applyTyping(ctx);
-  applyCodeGame(ctx);
 
   // 静的配信
   ctx.Route('public_files', '/public/:filename', PublicFileHandler);
