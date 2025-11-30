@@ -36,16 +36,13 @@ class TypingHandler extends Handler {
         }))
       : [];
 
-    // 0〜300 からランダム 30 語
-    const randomWords = words.slice(0, 300).sort(() => 0.5 - Math.random()).slice(0, 30);
-
     const uid = this.user?._id || 0;
     const coll = this.ctx.db.collection<TypingScore>('typingScores');
     const history = await coll.find({ uid }).sort({ createdAt: -1 }).limit(5).toArray();
 
     this.response.template = 'typing.html';
     this.response.body = {
-      words: JSON.stringify(randomWords),
+      words: JSON.stringify(words),
       history,
     };
   }
