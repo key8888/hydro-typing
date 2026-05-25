@@ -1,52 +1,35 @@
-{% import "components/form.html" as form with context %}
 {% extends "layout/basic.html" %}
 {% block content %}
 <div class="row">
-  <div class="medium-9 columns">
+  <div class="medium-12 columns">
     <div class="section">
+      <div class="section__header">
+        <h1>{{ udoc.uname }} のブログ</h1>
+        {% if handler.user._id === udoc._id %}
+          <a href="/blog/{{ udoc._id }}/create" class="button">新規作成</a>
+        {% endif %}
+      </div>
       <div class="section__body">
-        <form method="post">
-          <div class="row">
-            <div class="medium-12 columns">
-              <label>
-                {{ _('Title') }}
-                <input 
-                  name="title" placeholder="{{ _('title') }}"
-                  value="{{ ddoc.title|default('') }}"
-                  class="textbox" autofocus>
-              </label>
+        {% if ddocs.length === 0 %}
+          <p>ブログ記事がありません。</p>
+        {% else %}
+          {% for ddoc in ddocs %}
+            <div class="blog-entry">
+              <h2><a href="/blog/{{ udoc._id }}/{{ ddoc.docId }}">{{ ddoc.title }}</a></h2>
+              <p class="meta">
+                {{ ddoc._id | formatTime }} |
+                閲覧 {{ ddoc.views }} |
+                返信 {{ ddoc.nReply }}
+              </p>
+              <p>{{ ddoc.content | truncate(200) }}</p>
             </div>
-          </div>
-          {{ form.form_textarea({
-                columns:12,
-                label:'Content',
-                name:'content',
-                value:ddoc.content|default(''),
-                hotkeys:'ctrl+enter:submit',
-                markdown:true,
-                required:true,
-                extra_style:'height: 500px',
-                extra_textarea_class:'auto-resize'
-              }) }}
-            <div class="row"><div class="columns">
-              <button name="operation" value="{{ 'update' if ddoc else 'create' }}" data-default-submit type="submit" class="rounded primary button">
-                {{ _('Update') if ddoc else _('Create') }} (Ctrl+Enter)
-              </button>
-            {% if ddoc and (handler.user.hasPriv(PRIV.PRIV_EDIT_SYSTEM) or handler.user.own(ddoc)) %}
-              <button name="operation" value="delete" type="submit" class="rounded button">
-                {{ _('Delete') }}
-              </button>
-            {% endif %}
-            <button type="button" class="rounded button" onclick="window.history.go(-1)">
-              {{ _('Cancel') }}
-            </button>
-          </div></div>
-        </form>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="section__body">
+        {{ paginator(page, dpcount, '/blog/' + udoc._id + '?page=') }}
       </div>
     </div>
-  </div>
-  <div class="medium-3 columns">
-    {% include 'components/md_hint.html' %}
   </div>
 </div>
 {% endblock %}
