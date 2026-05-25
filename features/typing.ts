@@ -1,4 +1,4 @@
-import { Context, Handler, PRIV } from 'hydrooj';
+import { Context, ForbiddenError, Handler, NotFoundError, param, PRIV, Types } from 'hydrooj';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { ObjectId } from 'hydrooj';
@@ -62,6 +62,19 @@ class TypingHandler extends Handler {
   }
 }
 
+class TypingDeleteHandler extends Handler {
+  @param('id', Types.ObjectId)
+  async post({}, id: ObjectId) {
+    const coll = this.ctx.db.collection<TypingScore>('typingScores');
+    const score = await coll.findOne({ _id: id });
+    if (!score) throw new NotFoundError('score');
+    if (score.uid !== this.user._id) throw new ForbiddenError();
+    await coll.deleteOne({ _id: id });
+    this.response.redirect = '/typing';
+  }
+}
+
 export function applyTyping(ctx: Context) {
   ctx.Route('typing_main', '/typing', TypingHandler, PRIV.PRIV_USER_PROFILE);
+  ctx.Route('typing_delete', '/typing/delete', TypingDeleteHandler, PRIV.PRIV_USER_PROFILE);
 }
