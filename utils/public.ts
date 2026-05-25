@@ -16,6 +16,7 @@ export class PublicFileHandler extends Handler {
     if (filename.endsWith('.css')) this.response.type = 'text/css';
     if (filename.endsWith('.js'))  this.response.type = 'application/javascript';
 
+    this.response.addHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     this.response.body = readFileSync(p, 'utf-8');
   }
 }
