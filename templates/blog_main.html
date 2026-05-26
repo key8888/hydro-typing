@@ -1,26 +1,31 @@
 {% extends "layout/basic.html" %}
 {% block content %}
+<link rel="stylesheet" href="/typing-assets/ow-theme.css?v=2">
+<div class="ow-blog-theme" style="padding: 20px 24px;">
 <div class="row">
   <div class="medium-12 columns">
     <div class="section">
       <div class="section__header">
-        <h1>{{ udoc.uname }} のブログ</h1>
+        {# FIX: CRIT-003 — i18n パターン修正 #}
+        <h1>{{ _("{0}'s blog", udoc.uname) }}</h1>
         {% if handler.user._id === udoc._id %}
-          <a href="/blog/{{ udoc._id }}/create" class="button">新規作成</a>
+          <a href="/blog/{{ udoc._id }}/create" class="button">{{ _('Create') }}</a>
         {% endif %}
       </div>
       <div class="section__body">
         {% if ddocs.length === 0 %}
-          <p>ブログ記事がありません。</p>
+          <p>{{ _('No blog posts.') }}</p>
         {% else %}
           {% for ddoc in ddocs %}
             <div class="blog-entry">
               <h2><a href="/blog/{{ udoc._id }}/{{ ddoc.docId }}">{{ ddoc.title }}</a></h2>
               <p class="meta">
                 {# FIX: formatTime フィルタが存在しないため、datetimeSpan グローバル関数で代替 #}
-                {{ datetimeSpan(ddoc._id)|safe }} |
-                閲覧 {{ ddoc.views }} |
-                返信 {{ ddoc.nReply }}
+                {{ datetimeSpan(ddoc._id)|safe }}
+                <span style="margin:0 .4rem;">&middot;</span>
+                {{ _('{0} views', ddoc.views) }}
+                <span style="margin:0 .4rem;">&middot;</span>
+                {{ _('{0} replies', ddoc.nReply) }}
               </p>
               <p>{{ ddoc.content | truncate(200) }}</p>
             </div>
@@ -52,5 +57,6 @@
       {% endif %}
     </div>
   </div>
+</div>
 </div>
 {% endblock %}

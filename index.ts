@@ -8,8 +8,9 @@ export async function apply(ctx: Context) {
   applyBlog(ctx);
   applyTyping(ctx);
 
-  // 静的配信
-  ctx.Route('public_files', '/public/:filename', PublicFileHandler);
+  // FIX: koa-static-cache が自動登録する /public/ パスと競合するため /typing-assets/ に変更し
+  // 自前の Cache-Control: no-cache ハンドラが確実にリクエストを処理できるようにする
+  ctx.Route('typing_assets', '/typing-assets/:filename', PublicFileHandler);
 
   // UI 注入（メニュー／ドロップダウン）
   ctx.injectUI('UserDropdown', 'blog_main', (h) => ({

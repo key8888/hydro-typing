@@ -1,0 +1,379 @@
+/* ===========================================================
+   BLOG — OVERWATCH THEME
+   Near-future sci-fi styling for blog pages
+   =========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@500;700;900&display=swap');
+
+/* --- Scoped tokens (fallback to typing.css token when loaded together) --- */
+.ow-blog-theme {
+  --ow-bg: #182740;
+  --ow-panel: rgba(22, 34, 58, 0.88);
+  --ow-panel-solid: #1a2d48;
+  --ow-border: rgba(249, 158, 26, 0.22);
+  --ow-border-cyan: rgba(0, 236, 255, 0.18);
+  --ow-accent: #F99E1A;
+  --ow-accent-glow: rgba(249, 158, 26, 0.45);
+  --ow-cyan: #00ECFF;
+  --ow-cyan-glow: rgba(0, 236, 255, 0.35);
+  --ow-text: #E8ECF1;
+  --ow-text-dim: #9AABC2;
+  --ow-muted: #5B6E89;
+  --ow-danger: #FF4655;
+  --ow-success: #45FFA0;
+  --ow-font-ui: 'Rajdhani', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --ow-font-hud: 'Orbitron', 'Rajdhani', monospace;
+  --ow-angle: polygon(
+    10px 0, calc(100% - 5px) 0,
+    100% 5px, 100% calc(100% - 10px),
+    calc(100% - 5px) 100%, 5px 100%,
+    0 calc(100% - 5px), 0 10px
+  );
+}
+
+/* ===========================================================
+   SECTIONS — Angular dark cards
+   =========================================================== */
+.ow-blog-theme .section {
+  background: var(--ow-panel) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--ow-border) !important;
+  clip-path: polygon(
+    10px 0, calc(100% - 5px) 0,
+    100% 5px, 100% calc(100% - 10px),
+    calc(100% - 5px) 100%, 5px 100%,
+    0 calc(100% - 5px), 0 10px
+  );
+  box-shadow:
+    0 0 30px rgba(249, 158, 26, 0.05),
+    0 0 60px rgba(0, 236, 255, 0.03);
+  padding: 20px;
+  color: var(--ow-text);
+}
+
+.ow-blog-theme .section__header {
+  border-bottom: 1px solid var(--ow-border);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+}
+
+.ow-blog-theme .section__body {
+  color: var(--ow-text);
+}
+
+/* ===========================================================
+   BLOG HEADLINES
+   =========================================================== */
+.ow-blog-theme .section__header h1 {
+  font-family: var(--ow-font-hud) !important;
+  font-weight: 900 !important;
+  font-size: 1.8rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--ow-accent) !important;
+  text-shadow: 0 0 20px rgba(249, 158, 26, 0.3) !important;
+  margin: 0 !important;
+}
+
+.ow-blog-theme h2 {
+  font-family: var(--ow-font-ui) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  color: var(--ow-text) !important;
+}
+
+/* ===========================================================
+   BREADCRUMB TAG (.discussion-node-tag)
+   =========================================================== */
+.ow-blog-theme .discussion-node-tag {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 0.35rem 0.85rem !important;
+  background: rgba(249, 158, 26, 0.08) !important;
+  border: 1px solid rgba(249, 158, 26, 0.2) !important;
+  clip-path: polygon(4px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 4px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px), 0 4px);
+  font-family: var(--ow-font-ui) !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: var(--ow-accent) !important;
+  transition: all 0.2s ease;
+}
+.ow-blog-theme .discussion-node-tag:hover {
+  background: rgba(249, 158, 26, 0.14) !important;
+  border-color: rgba(249, 158, 26, 0.4) !important;
+  box-shadow: 0 0 14px rgba(249, 158, 26, 0.2);
+}
+
+/* ===========================================================
+   BLOG ENTRY CARDS (blog_main.html)
+   =========================================================== */
+.ow-blog-theme .blog-entry {
+  background: rgba(0, 236, 255, 0.02);
+  border: 1px solid var(--ow-border-cyan);
+  clip-path: polygon(
+    8px 0, calc(100% - 4px) 0,
+    100% 4px, 100% calc(100% - 8px),
+    calc(100% - 4px) 100%, 4px 100%,
+    0 calc(100% - 4px), 0 8px
+  );
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.2s ease;
+}
+.ow-blog-theme .blog-entry:hover {
+  border-color: rgba(0, 236, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 236, 255, 0.08);
+  background: rgba(0, 236, 255, 0.04);
+}
+
+.ow-blog-theme .blog-entry h2 a {
+  font-family: var(--ow-font-ui) !important;
+  font-weight: 700 !important;
+  color: var(--ow-cyan) !important;
+  letter-spacing: 0.04em !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+.ow-blog-theme .blog-entry h2 a:hover {
+  color: var(--ow-accent) !important;
+  text-shadow: 0 0 10px rgba(249, 158, 26, 0.3);
+}
+
+.ow-blog-theme .blog-entry .meta {
+  font-family: var(--ow-font-ui) !important;
+  font-size: 0.82rem;
+  color: var(--ow-muted);
+  letter-spacing: 0.04em;
+}
+
+.ow-blog-theme .blog-entry .meta span,
+.ow-blog-theme .blog-entry .meta {
+  color: var(--ow-text-dim);
+}
+
+.ow-blog-theme .blog-entry p {
+  font-family: var(--ow-font-ui);
+  color: var(--ow-text-dim);
+  letter-spacing: 0.02em;
+}
+
+/* ===========================================================
+   BUTTONS (Create / Edit / etc.)
+   =========================================================== */
+.ow-blog-theme .button {
+  font-family: var(--ow-font-ui) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  clip-path: polygon(6px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 6px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px), 0 6px);
+  transition: all 0.2s ease !important;
+  border: none !important;
+  background: rgba(249, 158, 26, 0.12) !important;
+  color: var(--ow-accent) !important;
+}
+.ow-blog-theme .button:hover {
+  background: rgba(249, 158, 26, 0.22) !important;
+  box-shadow: 0 0 18px rgba(249, 158, 26, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+/* ===========================================================
+   SUPPLEMENTARY LIST (metadata)
+   =========================================================== */
+.ow-blog-theme .supplementary {
+  color: var(--ow-text-dim) !important;
+  font-family: var(--ow-font-ui) !important;
+  letter-spacing: 0.03em !important;
+}
+
+.ow-blog-theme .supplementary a {
+  color: var(--ow-cyan) !important;
+  transition: color 0.15s ease;
+}
+.ow-blog-theme .supplementary a:hover {
+  color: var(--ow-accent) !important;
+  text-shadow: 0 0 8px rgba(249, 158, 26, 0.3);
+}
+
+/* ===========================================================
+   SECTION FOOTER (views / star / report)
+   =========================================================== */
+.ow-blog-theme .section__footer {
+  border-top: 1px solid var(--ow-border) !important;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+}
+
+.ow-blog-theme .section__footer a {
+  color: var(--ow-cyan) !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+.ow-blog-theme .section__footer a:hover {
+  color: var(--ow-accent) !important;
+  text-shadow: 0 0 8px rgba(249, 158, 26, 0.3);
+}
+
+.ow-blog-theme .section__footer .icon {
+  transition: transform 0.2s ease;
+}
+.ow-blog-theme .section__footer a:hover .icon {
+  transform: scale(1.15);
+}
+
+/* ===========================================================
+   CONTENT AREA
+   =========================================================== */
+.ow-blog-theme .typo.richmedia {
+  color: var(--ow-text-dim) !important;
+  font-family: var(--ow-font-ui) !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.7 !important;
+}
+.ow-blog-theme .typo.richmedia a {
+  color: var(--ow-cyan) !important;
+}
+
+/* ===========================================================
+   SIDEBAR — User profile card
+   =========================================================== */
+.ow-blog-theme .section.side {
+  background: var(--ow-panel) !important;
+  border-color: var(--ow-border-cyan) !important;
+}
+
+.ow-blog-theme .profile__bg {
+  background: linear-gradient(135deg, rgba(249, 158, 26, 0.3), rgba(0, 236, 255, 0.08)) !important;
+  height: 64px !important;
+}
+
+.ow-blog-theme .sidebar-user-profile {
+  font-family: var(--ow-font-ui) !important;
+  color: var(--ow-text) !important;
+}
+.ow-blog-theme .sidebar-user-profile .media__body p {
+  color: var(--ow-text-dim);
+}
+.ow-blog-theme .sidebar-user-profile a {
+  color: var(--ow-accent) !important;
+  text-decoration: none;
+}
+.ow-blog-theme .sidebar-user-profile a:hover {
+  text-shadow: 0 0 8px rgba(249, 158, 26, 0.3);
+}
+
+/* ===========================================================
+   PAGINATION
+   =========================================================== */
+.ow-blog-theme .pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-family: var(--ow-font-ui);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.ow-blog-theme .pagination__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  background: rgba(0, 236, 255, 0.03);
+  border: 1px solid rgba(0, 236, 255, 0.15);
+  clip-path: polygon(3px 0, calc(100% - 2px) 0, 100% 2px, 100% calc(100% - 3px), calc(100% - 2px) 100%, 2px 100%, 0 calc(100% - 2px), 0 3px);
+  color: var(--ow-text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+.ow-blog-theme .pagination__item:hover {
+  border-color: var(--ow-accent);
+  color: var(--ow-accent);
+  background: rgba(249, 158, 26, 0.08);
+  box-shadow: 0 0 10px rgba(249, 158, 26, 0.15);
+}
+.ow-blog-theme .pagination__item.active {
+  border-color: var(--ow-accent);
+  background: rgba(249, 158, 26, 0.15);
+  color: var(--ow-accent);
+  box-shadow: 0 0 14px rgba(249, 158, 26, 0.25);
+}
+
+/* ===========================================================
+   EDIT PAGE FORMS
+   =========================================================== */
+.ow-blog-theme .textbox {
+  background: var(--ow-panel-solid) !important;
+  border: 1px solid var(--ow-border-cyan) !important;
+  clip-path: polygon(6px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 6px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px), 0 6px);
+  color: var(--ow-text) !important;
+  font-family: var(--ow-font-ui) !important;
+  letter-spacing: 0.03em !important;
+  padding: 0.55rem 0.8rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ow-blog-theme .textbox:focus {
+  border-color: var(--ow-accent) !important;
+  box-shadow: 0 0 14px rgba(249, 158, 26, 0.2) !important;
+  outline: none;
+}
+.ow-blog-theme textarea.textbox {
+  background: var(--ow-panel-solid) !important;
+}
+
+.ow-blog-theme label {
+  font-family: var(--ow-font-ui) !important;
+  font-weight: 700 !important;
+  color: var(--ow-text) !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  font-size: 0.85rem;
+}
+
+/* ===========================================================
+   EMPTY STATE
+   =========================================================== */
+.ow-blog-theme .section__body p:only-child {
+  color: var(--ow-muted);
+  font-family: var(--ow-font-ui);
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+/* ===========================================================
+   BACKGROUND OVERRIDE FOR BLOG PAGES
+   =========================================================== */
+.ow-blog-theme {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(249, 158, 26, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(0, 236, 255, 0.02) 0%, transparent 50%),
+    var(--ow-bg) !important;
+  min-height: 60vh;
+  border-radius: 2px;
+}
+
+/* Subtle grid on blog pages */
+.ow-blog-theme::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(249, 158, 26, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249, 158, 26, 0.015) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+  z-index: 0;
+}
+.ow-blog-theme > * {
+  position: relative;
+  z-index: 1;
+}

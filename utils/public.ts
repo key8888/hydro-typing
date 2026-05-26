@@ -16,7 +16,10 @@ export class PublicFileHandler extends Handler {
     if (filename.endsWith('.css')) this.response.type = 'text/css';
     if (filename.endsWith('.js'))  this.response.type = 'application/javascript';
 
-    this.response.addHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    // FIX: koa-static-cache の maxAge 競合を避けるため強力なキャッシュ無効化ヘッダー
+    this.response.addHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+    this.response.addHeader('Pragma', 'no-cache');
+    this.response.addHeader('Expires', '0');
     // FIX: CRIT-002 — readFileSync に try-catch でエラーハンドリングを追加（存在しないファイルリクエスト時のサーバークラッシュ防止）
     try {
       this.response.body = readFileSync(p, 'utf-8');

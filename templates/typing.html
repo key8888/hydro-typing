@@ -1,82 +1,79 @@
 {% extends "layout/basic.html" %}
 {% block content %}
 
-<!-- 外部CSS -->
-<link rel="stylesheet" href="/public/typing.css">
+<!-- Overwatch-theme CSS for typing -->
+<link rel="stylesheet" href="/typing-assets/typing.css?v=2">
 
 <div class="row">
   <div class="medium-12 columns">
-    <!-- タイピング本体 -->
+    <!-- Typing practice main area -->
     <div class="section">
       <div class="section__header">
         <h1 class="section__title">{{ _('Typing Practice') }}</h1>
       </div>
 
       <div class="section__body typing-wrap">
-        <div class="level-bar">
-          <div class="level-tabs" role="tablist">
-            <button class="level-tab is-active" data-level="beginner">初級</button>
-            <button class="level-tab" data-level="intermediate">中級</button>
-            <button class="level-tab" data-level="advanced">上級</button>
-          </div>
-          <div class="level-caption">
-            <div id="level-title" class="level-title">初級 · 30 words</div>
-            <p id="level-description">0〜300の単語からランダムに出題します。</p>
-          </div>
-        </div>
-
-        <!-- 🔧 ここから新HUD -->
+        <!-- HUD deck (top float bar) -->
         <div class="hud-deck">
-          <!-- 発音トグル（左） -->
-          <div class="badge-card" id="tts-card" title="発音のON/OFF">
+          <div class="badge-card" id="tts-card" title="TTS ON/OFF">
             <label class="toggle">
               <input id="tts-toggle" type="checkbox" checked>
               <span class="toggle-slider"></span>
             </label>
-            <span class="badge-title">🔊 発音</span>
+            <span class="badge-title">&#x1F50A; TTS</span>
           </div>
 
-          <!-- 残り単語数（右） -->
           <div class="badge-card" id="left-card">
-            <span class="badge-title">Left</span>
+            <span class="badge-title">REMAINING</span>
             <span id="hud-remaining" class="badge-count">- / -</span>
           </div>
         </div>
-        <!-- 🔧 ここまで新HUD -->
+
+        <!-- Level bar (below HUD, inside wrap) -->
+        <div class="level-bar">
+          <div class="level-tabs" role="tablist">
+            <button class="level-tab is-active" data-level="beginner">BEGINNER</button>
+            <button class="level-tab" data-level="intermediate">INTERMEDIATE</button>
+            <button class="level-tab" data-level="advanced">ADVANCED</button>
+          </div>
+          <div class="level-caption">
+            <div id="level-title" class="level-title">BEGINNER &middot; 30 WORDS</div>
+            <p id="level-description">0&ndash;300 &#x306e;&#x5358;&#x8a9e;&#x304b;&#x3089;&#x30e9;&#x30f3;&#x30c0;&#x30e0;&#x306b;&#x51fa;&#x984c;&#x3057;&#x307e;&#x3059;&#x3002;</p>
+          </div>
+        </div>
 
         <div class="typing-panel">
-          <!-- 単語表示 -->
           <div id="word-display" class="typing-word"></div>
-
-          <!-- 日本語訳 -->
           <div id="meaning-display" class="typing-meaning"></div>
 
-          <!-- 終了画面 -->
+          <!-- End screen -->
           <div id="end-screen" class="typing-end">
-            <h2 class="section__title" style="margin-bottom:.25rem;">{{ _('Finished!') }}</h2>
+            <h2 style="font-family:var(--ow-font-hud);font-size:1.8rem;font-weight:900;color:var(--ow-accent);text-shadow:0 0 25px rgba(249,158,26,0.4);letter-spacing:.08em;margin-bottom:.5rem;">{{ _('Finished!') }}</h2>
             <div class="typing-end__score">
-              WPM: <span id="final-wpm">0</span>
+              WPM <span id="final-wpm">0</span>
             </div>
             <form id="score-form" method="post" action="/typing" style="margin-top:.5rem;">
               <input type="hidden" name="score" id="score-input">
               <button type="submit" class="rounded primary button">{{ _('Save score') }}</button>
             </form>
-            <div style="margin-top:.5rem; color:#6b7280; font-size:.9rem;">
-              <span>Chars: <span id="final-chars">0</span></span> ·
-              <span>Time: <span id="final-time">0.0</span>s</span>
+            <div style="margin-top:.7rem;color:var(--ow-muted);font-family:var(--ow-font-ui);font-size:.85rem;letter-spacing:.04em;">
+              <span>CHARS <span id="final-chars" style="color:var(--ow-cyan);font-weight:700;">0</span></span>
+              <span style="margin:0 .6rem;">&middot;</span>
+              <span>TIME <span id="final-time" style="color:var(--ow-cyan);font-weight:700;">0.0</span>s</span>
             </div>
-            <button id="restart-btn" type="button" class="ghost-btn">同じレベルでもう一度</button>
+            <button id="restart-btn" type="button" class="ghost-btn">RETRY</button>
           </div>
         </div>
+
         <div class="hint-row">
-          <div class="hint-chip">タイプ開始でタイマーが動きます</div>
-          <div class="hint-chip">Enter不要、正解で次に進みます</div>
-          <div class="hint-chip">レベルはいつでも切り替え可能</div>
+          <div class="hint-chip">TYPE TO START</div>
+          <div class="hint-chip">NO ENTER NEEDED</div>
+          <div class="hint-chip">SWITCH LEVEL ANYTIME</div>
         </div>
       </div>
     </div>
 
-    <!-- 履歴カード -->
+    <!-- History card -->
     <div class="section">
       <div class="history-card">
         <div class="history-header">
@@ -88,7 +85,7 @@
             <thead>
               <tr>
                 <th>{{ _('Date') }}</th>
-                <th>WPM</th> <!-- アクションもこの列に入れる -->
+                <th>WPM</th>
               </tr>
             </thead>
             <tbody id="history-body">
@@ -98,11 +95,10 @@
                 <td>
                   <span class="wpm-badge">{{ h.score }}</span>
                   <span class="history-actions">
-                    <!-- フォームで削除（JS不要） -->
                     <form method="post" action="/typing/delete" style="display:inline;">
                       <input type="hidden" name="id" value="{{ h._id }}">
                       <button type="submit" class="btn btn--ghost-danger">
-                        <span class="icon-trash"></span> Delete
+                        <span class="icon-trash"></span> DEL
                       </button>
                     </form>
                   </span>
@@ -112,7 +108,7 @@
             </tbody>
           </table>
           {% else %}
-          <div class="history-empty">まだ履歴がありません</div>
+          <div class="history-empty">{{ _('No history yet') }}</div>
           {% endif %}
         </div>
       </div>
@@ -121,11 +117,9 @@
   </div>
 </div>
 
-<!-- 外部JS -->
 <script>
-  // サーバー側からデータ受け取り
   const items = {{ words | safe }};
 </script>
-<script src="/public/typing.js"></script>
+<script src="/typing-assets/typing.js?v=2"></script>
 
 {% endblock %}

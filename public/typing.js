@@ -213,7 +213,11 @@ document.addEventListener('keydown',(e)=>{
   const expected=cur.word[currentCharIndex];
   if(!expected||!e.key||e.key.length!==1)return;
   if(e.key.toLowerCase()===expected.toLowerCase()){
-    currentCharIndex++; correctChars++; renderWord(false);
+    currentCharIndex++; correctChars++;
+    // OW theme: correct key flash
+    wordDisplay.classList.add('typing-word--correct');
+    setTimeout(() => wordDisplay.classList.remove('typing-word--correct'), 120);
+    renderWord(false);
     if(currentCharIndex===cur.word.length){
       waitingNext=true;
       setTimeout(()=>{
@@ -222,7 +226,12 @@ document.addEventListener('keydown',(e)=>{
         if(next?.word)speakWord(next.word);
       },1000);
     }
-  }else renderWord(true);
+  }else {
+    // OW theme: wrong key flash
+    wordDisplay.classList.add('typing-word--wrong');
+    setTimeout(() => wordDisplay.classList.remove('typing-word--wrong'), 200);
+    renderWord(true);
+  }
 });
 
 levelTabs.forEach(btn => {
