@@ -17,6 +17,12 @@ export class PublicFileHandler extends Handler {
     if (filename.endsWith('.js'))  this.response.type = 'application/javascript';
 
     this.response.addHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    this.response.body = readFileSync(p, 'utf-8');
+    // FIX: CRIT-002 — readFileSync に try-catch でエラーハンドリングを追加（存在しないファイルリクエスト時のサーバークラッシュ防止）
+    try {
+      this.response.body = readFileSync(p, 'utf-8');
+    } catch {
+      this.status = 404;
+      this.response.body = 'Not Found';
+    }
   }
 }

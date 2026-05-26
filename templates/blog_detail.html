@@ -8,7 +8,8 @@
           <li>
             <a class="discussion-node-tag" href="{{ url('blog_main', uid=udoc._id) }}">
               <span class="v-center icon icon-flag"></span>
-              {{ _("{0}'s blog").format(udoc.uname) }}
+              {# FIX: CRIT-003 — _() は翻訳結果の文字列を返すため .format() は使えない。引数は _() に直接渡す #}
+              {{ _("{0}'s blog", udoc.uname) }}
             </a>
           </li>
           <li><h2>{{ ddoc.title }}</h2></li>
@@ -28,7 +29,8 @@
           <span class="icon icon-edit"></span> {{ _('Edit') }}
         </a></li>
       {% endif %}
-        <li>{{ _('{0} views').format(ddoc.views) }}</li>
+        {# FIX: CRIT-003 — _() に引数を直接渡す #}
+        <li>{{ _('{0} views', ddoc.views) }}</li>
       {% if handler.user.hasPriv(PRIV.PRIV_USER_PROFILE) %}
         <li data-star="{{ dsdoc['star'] }}"></li>
       {% endif %}

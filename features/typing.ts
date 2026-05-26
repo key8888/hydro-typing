@@ -18,7 +18,13 @@ interface WordItem {
 class TypingHandler extends Handler {
   async get() {
     const filePath = join(__dirname, '..', 'typing_words', 'words.json');
-    const raw = readFileSync(filePath, 'utf-8');
+    // FIX: CRIT-001 — readFileSync に try-catch でエラーハンドリングを追加（ファイル不在/破損時にサーバークラッシュ防止）
+    let raw: string;
+    try {
+      raw = readFileSync(filePath, 'utf-8');
+    } catch {
+      raw = '[]';
+    }
 
     let parsed: any;
     try {

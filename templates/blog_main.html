@@ -17,7 +17,8 @@
             <div class="blog-entry">
               <h2><a href="/blog/{{ udoc._id }}/{{ ddoc.docId }}">{{ ddoc.title }}</a></h2>
               <p class="meta">
-                {{ ddoc._id | formatTime }} |
+                {# FIX: formatTime フィルタが存在しないため、datetimeSpan グローバル関数で代替 #}
+                {{ datetimeSpan(ddoc._id)|safe }} |
                 閲覧 {{ ddoc.views }} |
                 返信 {{ ddoc.nReply }}
               </p>
@@ -26,9 +27,29 @@
           {% endfor %}
         {% endif %}
       </div>
+      {# FIX: paginator グローバル関数が存在しないため、手動でページネーションを実装 #}
+      {% set paginationBase = '/blog/' + udoc._id + '?page=' %}
+      {% if dpcount > 1 %}
       <div class="section__body">
-        {{ paginator(page, dpcount, '/blog/' + udoc._id + '?page=') }}
+        <nav class="pagination">
+          {% if page > 1 %}
+            <a href="{{ paginationBase + (page - 1) }}" class="pagination__item">{{ _('Prev') }}</a>
+          {% endif %}
+          {% for p in range(1, dpcount + 1) %}
+            {% if p === page %}
+              <span class="pagination__item active">{{ p }}</span>
+            {% elif p === 1 or p === dpcount or (p >= page - 2 and p <= page + 2) %}
+              <a href="{{ paginationBase + p }}" class="pagination__item">{{ p }}</a>
+            {% elif p === page - 3 or p === page + 3 %}
+              <span class="pagination__item">...</span>
+            {% endif %}
+          {% endfor %}
+          {% if page < dpcount %}
+            <a href="{{ paginationBase + (page + 1) }}" class="pagination__item">{{ _('Next') }}</a>
+          {% endif %}
+        </nav>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
