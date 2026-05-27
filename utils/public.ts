@@ -7,7 +7,8 @@ export class PublicFileHandler extends Handler {
     const base = join(__dirname, '..', 'public');
     const p = normalize(join(base, filename));
 
-    if (!p.startsWith(base)) {
+    // FIX: HIGH-001 — startsWith はディレクトリ境界をチェックしないため base + '/' で境界チェックする
+    if (!p.startsWith(base + '/') && p !== base) {
       this.status = 403;
       this.response.body = 'Forbidden';
       return;

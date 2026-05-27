@@ -1,4 +1,4 @@
-# 修正計画 第2版 (コードレビュー結果)
+# 修正計画 第2版 (コードレビュー結果)（修正済み）
 
 > 作成日: 2026-05-25
 > ベース: HydroOJ ソースコード解析ドキュメント (`docs/00~13`)
@@ -8,7 +8,7 @@
 
 ## 🔴 CRITICAL — クラッシュ・データ損失・セキュリティ脆弱性
 
-### CRIT-001: `readFileSync` にエラーハンドリングがない（サーバークラッシュ）
+### CRIT-001: `readFileSync` にエラーハンドリングがない（サーバークラッシュ） (修正済み)
 
 - **ファイル**: `features/typing.ts:21`
 - **コード**: `const raw = readFileSync(filePath, 'utf-8');`
@@ -20,7 +20,7 @@
   try { raw = readFileSync(filePath, 'utf-8'); } catch { raw = '[]'; }
   ```
 
-### CRIT-002: `PublicFileHandler` の `readFileSync` にエラーハンドリングがない
+### CRIT-002: `PublicFileHandler` の `readFileSync` にエラーハンドリングがない (修正済み)
 
 - **ファイル**: `utils/public.ts:20`
 - **コード**: `this.response.body = readFileSync(p, 'utf-8');`
@@ -32,7 +32,7 @@
   catch { this.status = 404; this.response.body = 'Not Found'; }
   ```
 
-### CRIT-003: テンプレート内で `.format()` を呼び出している（テンプレートレンダリング時 TypeError）
+### CRIT-003: テンプレート内で `.format()` を呼び出している（テンプレートレンダリング時 TypeError） (修正済み)
 
 - **ファイル**: `templates/blog_detail.html:11,31`
 - **コード**:
@@ -50,37 +50,41 @@
 
 ## 🟠 HIGH — 機能バグ・欠落機能
 
-### HIGH-001: パストラバーサル対策が不十分
+### HIGH-001: パストラバーサル対策が不十分 (修正済み)
 
-- **ファイル**: `utils/public.ts:10`
+- **ファイル**: `utils/public.ts:10-11`
 - **コード**: `if (!p.startsWith(base))`
 - **問題**: `startsWith` はディレクトリ境界をチェックしない。`base` が `/foo/public` の場合、`/foo/public-other/evil.txt` のようなパスも通ってしまう。名前の先頭一致で誤認するケースがある。
 - **ドキュメント参照**: `docs/04-routing.md:2.2` — "パストラバーサル対策"
 - **修正**:
   ```typescript
+  // FIX: HIGH-001 — startsWith はディレクトリ境界をチェックしないため base + '/' で境界チェックする
   if (!p.startsWith(base + '/') && p !== base) {
   ```
+- **修正結果**: `utils/public.ts:10-11`
 
-### HIGH-002: POST /typing でスコアバリデーションがない
+### HIGH-002: POST /typing でスコアバリデーションがない (修正済み)
 
-- **ファイル**: `features/typing.ts:51-58`
+- **ファイル**: `features/typing.ts:66-70`
 - **コード**: `score: Number(score)` — 無検証でDBに保存
 - **問題**: `NaN`, `Infinity`, 負の値, 300越えなどがそのまま保存される。履歴表示が壊れる可能性がある。
 - **ドキュメント参照**: `docs/03-handlers.md:3.4` — Types.Float 等のバリデーションパターン
 - **修正**:
   ```typescript
-  const score = Number(this.request.body.score);
-  if (!Number.isFinite(score) || score < 0 || score > 300) throw new ValidationError('score');
+  const numScore = Number(score);
+  if (!Number.isFinite(numScore) || numScore < 0 || numScore > 300) throw new ValidationError('score');
   ```
+- **修正結果**: `features/typing.ts:66-70`
 
-### HIGH-003: リクエスト毎の同期的ファイル読み込み（イベントループブロック）
+### HIGH-003: リクエスト毎の同期的ファイル読み込み（イベントループブロック） (修正済み)
 
-- **ファイル**: `features/typing.ts:20-21`
+- **ファイル**: `features/typing.ts:18-49`
 - **コード**: `readFileSync` が GET リクエスト毎に呼ばれる
 - **問題**: 同時アクセスが増えるとイベントループがブロックされる。`words.json` は 2800行・466語あり、毎回パースされる。
 - **ドキュメント参照**: `docs/12-plugin-development.md:8.1` — "リクエスト毎に同期的ファイル読み込み" は明確に禁止
 - **修正**: モジュールスコープでキャッシュする:
   ```typescript
+  const wordsPath = join(__dirname, '..', 'typing_words', 'words.json');
   let wordsCache: WordItem[] | null = null;
   function loadWords(): WordItem[] {
     if (wordsCache) return wordsCache;
@@ -91,14 +95,15 @@
     return wordsCache;
   }
   ```
+- **修正結果**: `features/typing.ts:18-49`
 
-### HIGH-004: `blog_main.html` が i18n を使わず日本語直書き
+### HIGH-004: `blog_main.html` が i18n を使わず日本語直書き (修正済み)
 
-- **ファイル**: `templates/blog_main.html:7,14,22`
+- **ファイル**: `templates/blog_main.html:10,17,26`
 - **コード**:
-  - Line 7: `<h1>{{ udoc.uname }} のブログ</h1>`
-  - Line 14: `<p>ブログ記事がありません。</p>`
-  - Line 22: `閲覧 {{ ddoc.views }}`
+  - Line 10: `{{ _("{0}'s blog", udoc.uname) }}`
+  - Line 17: `{{ _('No blog posts.') }}`
+  - Line 26: `{{ _('{0} views', ddoc.views) }}`
 - **問題**: `features/blog.ts:221-224` で `zh`, `zh_TW`, `kr`, `en` の翻訳が登録されているが、テンプレートが日本語直書きなので全く活用されていない。
 - **ドキュメント参照**: `docs/07-i18n.md:3.1` — テンプレート内での `_()` の使い方
 - **修正**:
@@ -107,6 +112,7 @@
   <p>{{ _('No blog posts.') }}</p>
   {{ _('{0} views', ddoc.views) }}
   ```
+- **修正結果**: `templates/blog_main.html:10,17,26`（既に適用済み）
 
 ### HIGH-005: `blog_detail.html` で `url()` を使わずハードコードされたパス
 
@@ -313,10 +319,10 @@
 | **P0** | CRIT-001 | readFileSync エラーハンドリング (typing.ts) | 3行 | サーバー安定性 |
 | **P0** | CRIT-002 | readFileSync エラーハンドリング (public.ts) | 5行 | サーバー安定性 |
 | **P0** | CRIT-003 | テンプレート `.format()` 修正 | 2行 | ページ表示 |
-| **P1** | HIGH-001 | パストラバーサル対策強化 | 1行 | セキュリティ |
-| **P1** | HIGH-002 | スコアバリデーション追加 | 3行 | データ品質 |
-| **P1** | HIGH-003 | 単語リストキャッシュ | 15行 | パフォーマンス |
-| **P1** | HIGH-004 | blog_main.html i18n対応 | 5行 | 国際化 |
+| **P1** | HIGH-001 | パストラバーサル対策強化 | 1行 | セキュリティ | ✅ 修正済み |
+| **P1** | HIGH-002 | スコアバリデーション追加 | 3行 | データ品質 | ✅ 修正済み |
+| **P1** | HIGH-003 | 単語リストキャッシュ | 15行 | パフォーマンス | ✅ 修正済み |
+| **P1** | HIGH-004 | blog_main.html i18n対応 | 5行 | 国際化 | ✅ 修正済み |
 | **P1** | MED-001 | keydown preventDefault | 3行 | UX |
 | **P2** | MED-002 | MIMEタイプ拡充 | 10行 | 保守性 |
 | **P2** | MED-003 | BlogModel.del 戻り値型修正 | 1行 | 型安全 |
