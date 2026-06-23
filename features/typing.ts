@@ -2,6 +2,12 @@ import { Context, ForbiddenError, Handler, NotFoundError, param, PRIV, Types, Va
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { ObjectId } from 'hydrooj';
+/*
+ * コインゲット機能から、計算式の初期化と取得関数をインポート。
+ * タイピング画面の初回読み込み時に、現在の計算式とユーザーの
+ * コイン残高をフロントエンドへ渡すために使用する。
+ */
+import { ensureDefaultFormulas, getFormulas } from './coinget';
 
 interface TypingScore {
   _id?: ObjectId;
@@ -13,6 +19,13 @@ interface TypingScore {
 interface WordItem {
   word: string;
   meaning?: string;
+}
+
+/** ユーザーコイン残高（coinget.ts と共有のインターフェース） */
+interface UserCoin {
+  _id?: ObjectId;
+  uid: number;
+  coins: number;
 }
 
 // FIX: HIGH-003 — 単語リストをモジュールスコープでキャッシュし、リクエスト毎の同期的ファイル読み込みを回避
@@ -56,10 +69,20 @@ class TypingHandler extends Handler {
     const coll = this.ctx.db.collection<TypingScore>('typingScores');
     const history = await coll.find({ uid }).sort({ createdAt: -1 }).limit(5).toArray();
 
+    // コインゲット機能用：計算式の初期化と現在の設定を取得
+    await ensureDefaultFormulas(this.ctx);
+    const coinFormulas = await getFormulas(this.ctx);
+    // 現在のユーザーのコイン残高を取得（未登録の場合は 0）
+    const coinColl = this.ctx.db.collection<UserCoin>('userCoins');
+    const userCoin = await coinColl.findOne({ uid });
+    const userCoins = userCoin?.coins ?? 0;
+
     this.response.template = 'typing.html';
     this.response.body = {
       words: JSON.stringify(words),
       history,
+      coinFormulas: JSON.stringify(coinFormulas), // JS上で使うため文字列化
+      userCoins,                                   // 数値のままテンプレートへ
     };
   }
 

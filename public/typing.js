@@ -72,6 +72,35 @@ const levelConfigs = {
     poolEnd: null,
     hideMode: 'partial',
   },
+  'coinget-intermediate': {
+    /*
+     * コインゲット（中級）
+     * タイピング内容は INTERMEDIATE と同一（40語 / 頭文字伏せ字）。
+     * isCoinMode: true により、終了時にコイン計算APIが呼ばれる。
+     * このモードに入るには管理者発行の4桁パスワードが必要。
+     */
+    label: 'COIN GET 中級',
+    description: '全単語から40語。コインを獲得できます。',
+    count: 4, //4 for testing, can be changed to 40 for real use
+    poolStart: 0,
+    poolEnd: null,
+    hideMode: 'head',
+    isCoinMode: true,
+  },
+  'coinget-advanced': {
+    /*
+     * コインゲット（上級）
+     * タイピング内容は ADVANCED と同一（50語 / ランダム2〜3文字伏せ字）。
+     * コイン計算式は管理者がカスタマイズ可能（デフォルト: wpm * 3 + 20）。
+     */
+    label: 'COIN GET 上級',
+    description: '全単語から50語。コインを獲得できます。',
+    count: 5, //5 for testing, can be changed to 50 for real use
+    poolStart: 0,
+    poolEnd: null,
+    hideMode: 'partial',
+    isCoinMode: true,
+  },
 };
 
 let sessionWords = [];
@@ -80,6 +109,9 @@ let totalWords = 0;
 let currentWordIndex = 0, currentCharIndex = 0, correctChars = 0;
 let startedAt = null, finishedAt = null, waitingNext = false;
 let activeLevel = 'beginner';
+/* コインゲットモード用の状態変数 */
+let isCoinMode = false;        // 現在のセッションがコインゲットモードかどうか
+let pendingCoinLevel = null;   // パスワード認証後に開始する予定のレベルキー
 
 const hudRemaining = document.getElementById('hud-remaining');
 const wordDisplay = document.getElementById('word-display');
@@ -92,7 +124,19 @@ const scoreInput = document.getElementById('score-input');
 const levelTitle = document.getElementById('level-title');
 const levelDescription = document.getElementById('level-description');
 const levelTabs = document.querySelectorAll('.level-tab');
+const coinTabs = document.querySelectorAll('.coin-tab'); // コインゲットモード用タブ
 const restartBtn = document.getElementById('restart-btn');
+
+/* パスワードダイアログ関連のDOM要素 */
+const pwDialog = document.getElementById('pw-dialog');
+const pwInput = document.getElementById('pw-input');
+const pwError = document.getElementById('pw-error');
+const pwSubmit = document.getElementById('pw-submit');
+const pwCancel = document.getElementById('pw-cancel');
+/* コイン獲得結果表示関連のDOM要素 */
+const coinResult = document.getElementById('coin-result');
+const coinsEarnedEl = document.getElementById('coins-earned');
+const coinsTotalEl = document.getElementById('coins-total');
 
 function pad2(n){return n.toString().padStart(2,'0');}
 
@@ -155,7 +199,7 @@ function renderWord(showWrong=false){
   renderRemaining();
 }
 
-function finish(){
+async function finish(){
   finishedAt=Date.now();
   waitingNext=false;
   const elapsedMs=Math.max(1,finishedAt-(startedAt??finishedAt));
@@ -168,6 +212,38 @@ function finish(){
   finalCharsEl.textContent=String(correctChars);
   finalTimeEl.textContent=(elapsedMs/1000).toFixed(1);
   scoreInput.value=String(wpm);
+
+  /*
+   * コインゲットモードの場合：
+   * 1. 通常のスコア保存フォームを非表示にする
+   * 2. fetch で /typing/coin/save に POST し、WPMとモードからコインを計算してもらう
+   * 3. サーバーは計算式を評価 → コイン加算 → 結果を返す
+   * 4. 獲得コイン数と累計残高を画面に表示
+   *
+   * URLSearchParams (form-urlencoded) を使用することで、
+   * CORS preflight を回避しつつサーバーの body parser と互換性を保つ。
+   */
+  if (isCoinMode) {
+    scoreInput.closest('form').style.display = 'none';
+    try {
+      const formData = new URLSearchParams();
+      formData.append('wpm', String(wpm));
+      formData.append('mode', activeLevel);
+      const res = await fetch('/typing/coin/save', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        coinsEarnedEl.textContent = String(data.coinsEarned);
+        coinsTotalEl.textContent = String(data.totalCoins);
+        coinResult.style.display = 'block';
+      }
+    } catch {}
+  } else {
+    coinResult.style.display = 'none';
+    scoreInput.closest('form').style.display = '';
+  }
 }
 
 function nextWord(){
@@ -183,10 +259,16 @@ function updateLevelUI(levelKey){
   levelTabs.forEach(btn => {
     btn.classList.toggle('is-active', btn.dataset.level===levelKey);
   });
+  // コインゲットタブも通常タブと同様に active 状態を更新
+  coinTabs.forEach(btn => {
+    btn.classList.toggle('is-active', btn.dataset.level===levelKey);
+  });
 }
 
 function resetSession(levelKey){
   activeLevel = levelKey;
+  // levelConfig に isCoinMode フラグがあればコインモードと判定
+  isCoinMode = !!levelConfigs[levelKey]?.isCoinMode;
   sessionWords = pickWords(levelKey);
   totalWords = sessionWords.length;
   currentWordIndex = 0;
@@ -198,11 +280,16 @@ function resetSession(levelKey){
   endScreen.style.display='none';
   wordDisplay.style.display='block';
   meaningEl.style.display='block';
+  // コイン結果表示をリセット、スコア保存フォームを再表示
+  coinResult.style.display='none';
+  scoreInput.closest('form').style.display='';
   updateLevelUI(levelKey);
   renderWord(false);
 }
 
 document.addEventListener('keydown',(e)=>{
+  /* パスワードダイアログ表示中はタイピング入力を無視する */
+  if (pwDialog && pwDialog.style.display !== 'none') return;
   if(waitingNext||endScreen.style.display==='block')return;
   if(!startedAt&&e.key&&e.key.length===1){
     startedAt=Date.now();
@@ -237,6 +324,89 @@ document.addEventListener('keydown',(e)=>{
 levelTabs.forEach(btn => {
   btn.addEventListener('click', ()=>{
     resetSession(btn.dataset.level);
+  });
+});
+
+/* ===== コインゲットモード：パスワードダイアログ ===== */
+/*
+ * コインゲットモードのフロー：
+ * 1. ユーザーが COIN GET タブをクリック
+ * 2. showPasswordDialog(levelKey) で4桁入力ダイアログを表示
+ * 3. ユーザーがパスワードを入力 → UNLOCK クリック
+ * 4. fetch POST /typing/coin/verify でサーバー検証
+ * 5. 成功 → ダイアログを閉じ、resetSession(levelKey) でモード開始
+ * 6. 失敗 → エラーメッセージを表示（ダイアログは開いたまま）
+ *
+ * 注意：hidePasswordDialog() は pendingCoinLevel を null にクリアするため、
+ * 呼び出し前にローカル変数へ退避する必要がある（バグ修正済み）。
+ */
+function showPasswordDialog(levelKey) {
+  pendingCoinLevel = levelKey;
+  pwDialog.style.display = 'flex';
+  pwInput.value = '';
+  pwError.style.display = 'none';
+  pwInput.focus();
+}
+
+function hidePasswordDialog() {
+  pwDialog.style.display = 'none';
+  pendingCoinLevel = null;
+}
+
+pwSubmit?.addEventListener('click', async () => {
+  const pw = pwInput.value.trim();
+  if (!/^\d{4}$/.test(pw)) {
+    pwError.textContent = 'Enter a 4-digit password';
+    pwError.style.display = 'block';
+    return;
+  }
+  try {
+    const formData = new URLSearchParams();
+    formData.append('password', pw);
+    const res = await fetch('/typing/coin/verify', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+    if (data.success) {
+      /*
+       * hidePasswordDialog() が pendingCoinLevel を null で上書きしてしまうため、
+       * 先にローカル変数に退避しておく。
+       * （hidePasswordDialog → pendingCoinLevel=null → if(pendingCoinLevel) が常に偽になるバグの修正）
+       */
+      const level = pendingCoinLevel;
+      hidePasswordDialog();
+      if (level) resetSession(level);
+    } else {
+      pwError.textContent = 'Invalid or expired password';
+      pwError.style.display = 'block';
+    }
+  } catch {
+    pwError.textContent = 'Server error. Try again.';
+    pwError.style.display = 'block';
+  }
+});
+
+/* キャンセルボタン：ダイアログを閉じて pendingCoinLevel をクリア */
+pwCancel?.addEventListener('click', () => {
+  hidePasswordDialog();
+});
+
+/* Enter キーで送信、Escape キーでキャンセル */
+pwInput?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') pwSubmit?.click();
+  if (e.key === 'Escape') hidePasswordDialog();
+});
+
+/* ダイアログ外側（オーバーレイ）クリックで閉じる */
+pwDialog?.addEventListener('click', (e) => {
+  if (e.target === pwDialog) hidePasswordDialog();
+});
+
+/* コインゲットタブのクリックでパスワードダイアログを表示 */
+coinTabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    showPasswordDialog(btn.dataset.level);
   });
 });
 

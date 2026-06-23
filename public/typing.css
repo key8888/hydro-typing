@@ -128,6 +128,16 @@
   padding: 0.5rem 0;
 }
 
+/*
+ * タブを縦に2行（通常タブ + コインゲットタブ）積むためのラッパー。
+ * flex-direction: column で縦積みし、gap で行間を確保。
+ */
+.tabs-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 /* Tab buttons — angular sci-fi */
 .level-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .level-tab {
@@ -164,6 +174,51 @@
   box-shadow:
     0 0 20px rgba(249, 158, 26, 0.25),
     inset 0 1px 0 rgba(249, 158, 26, 0.2);
+}
+
+/*
+ * コインゲットモード用のタブボタン。
+ * flex: 1 により2つのボタンが親コンテナの幅を均等に分割し、
+ * 上段の3ボタン（level-tabs）と合計幅が揃う。
+ * カラーテーマはオレンジ/ゴールド系（通常タブのシアン系と差別化）。
+ */
+.coin-tabs { display: flex; gap: 0.5rem; }
+.coin-tab {
+  flex: 1;
+  position: relative;
+  border: 1px solid rgba(249, 158, 26, 0.2);
+  background: rgba(249, 158, 26, 0.04);
+  color: var(--ow-muted);
+  padding: 0.55rem 1.1rem;
+  clip-path: polygon(
+    5px 0, calc(100% - 3px) 0,
+    100% 3px, 100% calc(100% - 5px),
+    calc(100% - 3px) 100%, 3px 100%,
+    0 calc(100% - 3px), 0 5px
+  );
+  font-family: var(--ow-font-ui);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.coin-tab:hover {
+  color: var(--ow-accent);
+  border-color: rgba(249, 158, 26, 0.45);
+  background: rgba(249, 158, 26, 0.1);
+  box-shadow: 0 0 14px rgba(249, 158, 26, 0.2);
+  transform: translateY(-1px);
+}
+.coin-tab.is-active {
+  border-color: var(--ow-accent);
+  background: linear-gradient(135deg, rgba(249, 158, 26, 0.2), rgba(249, 158, 26, 0.08));
+  color: var(--ow-accent);
+  box-shadow:
+    0 0 20px rgba(249, 158, 26, 0.3),
+    inset 0 1px 0 rgba(249, 158, 26, 0.25);
 }
 
 /* Level caption */
@@ -606,6 +661,137 @@
   font-family: var(--ow-font-ui);
   font-size: 0.95rem;
   letter-spacing: 0.04em;
+}
+
+/* ===========================================================
+   PASSWORD DIALOG
+   コインゲットモードに入るための4桁パスワード入力ダイアログ。
+   画面全体を覆うオーバーレイの上に、Overwatch テーマの
+   ダイアログボックスを表示する。
+   =========================================================== */
+.pw-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.pw-dialog {
+  background: var(--ow-panel);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--ow-border);
+  clip-path: polygon(
+    14px 0, calc(100% - 7px) 0,
+    100% 7px, 100% calc(100% - 14px),
+    calc(100% - 7px) 100%, 7px 100%,
+    0 calc(100% - 7px), 0 14px
+  );
+  padding: 2rem 2.2rem;
+  text-align: center;
+  min-width: 320px;
+  box-shadow: 0 0 60px rgba(249, 158, 26, 0.15);
+}
+.pw-dialog__title {
+  font-family: var(--ow-font-hud);
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--ow-accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem;
+  text-shadow: 0 0 20px rgba(249, 158, 26, 0.4);
+}
+.pw-dialog__input {
+  display: block;
+  width: 200px;
+  margin: 0 auto 1rem;
+  padding: 0.7rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 236, 255, 0.25);
+  color: var(--ow-cyan);
+  font-family: var(--ow-font-hud);
+  font-size: 1.6rem;
+  text-align: center;
+  letter-spacing: 0.5em;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pw-dialog__input:focus {
+  border-color: var(--ow-accent);
+  box-shadow: 0 0 20px rgba(249, 158, 26, 0.2);
+}
+.pw-dialog__input::placeholder {
+  color: rgba(232, 236, 241, 0.2);
+  letter-spacing: 0.3em;
+}
+.pw-dialog__error {
+  color: var(--ow-danger);
+  font-family: var(--ow-font-ui);
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+.pw-dialog__actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.pw-btn {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid;
+  font-family: var(--ow-font-ui);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(5px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 5px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px), 0 5px);
+}
+.pw-btn--submit {
+  background: rgba(249, 158, 26, 0.15);
+  border-color: var(--ow-accent);
+  color: var(--ow-accent);
+}
+.pw-btn--submit:hover {
+  background: rgba(249, 158, 26, 0.25);
+  box-shadow: 0 0 20px rgba(249, 158, 26, 0.3);
+}
+.pw-btn--cancel {
+  background: transparent;
+  border-color: rgba(255, 70, 85, 0.25);
+  color: var(--ow-danger);
+}
+.pw-btn--cancel:hover {
+  background: rgba(255, 70, 85, 0.1);
+  box-shadow: 0 0 14px rgba(255, 70, 85, 0.2);
+}
+
+/* ===========================================================
+   COIN RESULT（コイン獲得結果表示）
+   タイピング終了後のエンドスクリーン内に表示される。
+   コインゲットモードでのみ表示（デフォルト display:none）。
+   =========================================================== */
+.coin-result {
+  margin: 1rem 0;
+}
+.coin-result__earned {
+  font-family: var(--ow-font-hud);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--ow-accent);
+  text-shadow: 0 0 25px rgba(249, 158, 26, 0.5);
+  letter-spacing: 0.06em;
+}
+.coin-result__total {
+  font-family: var(--ow-font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ow-text-dim);
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
 }
 
 /* ===========================================================

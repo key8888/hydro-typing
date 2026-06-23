@@ -29,12 +29,23 @@
           </div>
         </div>
 
-        <!-- Level bar (below HUD, inside wrap) -->
+        <!-- Level bar (below HUD, inside wrap)
+             タブ式の練習モード切替。
+             上段：BEGINNER / INTERMEDIATE / ADVANCED（通常の練習）
+             下段：COIN GET (INTERMEDIATE) / COIN GET (ADVANCED)（コイン獲得）
+             下段2ボタンは flex:1 により上段3ボタンと同じ合計幅になる -->
         <div class="level-bar">
-          <div class="level-tabs" role="tablist">
-            <button class="level-tab is-active" data-level="beginner">BEGINNER</button>
-            <button class="level-tab" data-level="intermediate">INTERMEDIATE</button>
-            <button class="level-tab" data-level="advanced">ADVANCED</button>
+          <div class="tabs-column">
+            <div class="level-tabs" role="tablist">
+              <button class="level-tab is-active" data-level="beginner">BEGINNER</button>
+              <button class="level-tab" data-level="intermediate">INTERMEDIATE</button>
+              <button class="level-tab" data-level="advanced">ADVANCED</button>
+            </div>
+            <!-- コインゲットモード用タブ（要パスワード） -->
+            <div class="coin-tabs">
+              <button class="coin-tab" data-level="coinget-intermediate">COIN GET (INTERMEDIATE)</button>
+              <button class="coin-tab" data-level="coinget-advanced">COIN GET (ADVANCED)</button>
+            </div>
           </div>
           <div class="level-caption">
             <div id="level-title" class="level-title">BEGINNER &middot; 30 WORDS</div>
@@ -49,8 +60,14 @@
           <!-- End screen -->
           <div id="end-screen" class="typing-end">
             <h2 style="font-family:var(--ow-font-hud);font-size:1.8rem;font-weight:900;color:var(--ow-accent);text-shadow:0 0 25px rgba(249,158,26,0.4);letter-spacing:.08em;margin-bottom:.5rem;">{{ _('Finished!') }}</h2>
+            <!-- WPM 表示 -->
             <div class="typing-end__score">
               WPM <span id="final-wpm">0</span>
+            </div>
+            <!-- コインゲットモード専用：獲得コイン数と累計表示（デフォルト非表示） -->
+            <div id="coin-result" class="coin-result" style="display:none;">
+              <div class="coin-result__earned">+<span id="coins-earned">0</span> COINS</div>
+              <div class="coin-result__total">TOTAL: <span id="coins-total">0</span></div>
             </div>
             <form id="score-form" method="post" action="/typing" style="margin-top:.5rem;">
               <input type="hidden" name="score" id="score-input">
@@ -69,6 +86,23 @@
           <div class="hint-chip">TYPE TO START</div>
           <div class="hint-chip">NO ENTER NEEDED</div>
           <div class="hint-chip">SWITCH LEVEL ANYTIME</div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      パスワード入力ダイアログ
+      コインゲットモードに入る際に、管理者が発行した4桁パスワードを要求する。
+      typing-wrap の外側に配置することで overflow:hidden の影響を回避。
+    -->
+    <div id="pw-dialog" class="pw-dialog-overlay" style="display:none;">
+      <div class="pw-dialog">
+        <h3 class="pw-dialog__title">ENTER PASSWORD</h3>
+        <input type="password" id="pw-input" class="pw-dialog__input" maxlength="4" pattern="\d{4}" inputmode="numeric" autocomplete="off" placeholder="0000">
+        <div id="pw-error" class="pw-dialog__error" style="display:none;"></div>
+        <div class="pw-dialog__actions">
+          <button id="pw-submit" class="pw-btn pw-btn--submit">UNLOCK</button>
+          <button id="pw-cancel" class="pw-btn pw-btn--cancel">CANCEL</button>
         </div>
       </div>
     </div>
@@ -117,8 +151,16 @@
   </div>
 </div>
 
+<!--
+  サーバーサイドからクライアントへ渡すデータ：
+  - items         : タイピング用単語リスト（JSON文字列）
+  - coinFormulas  : モード別コイン計算式（JSON文字列）
+  - currentUserCoins : 現在のユーザーのコイン残高（数値）
+-->
 <script>
   const items = {{ words | safe }};
+  const coinFormulas = {{ coinFormulas | safe }};
+  const currentUserCoins = {{ userCoins }};
 </script>
 <script src="/typing-assets/typing.js?v=2"></script>
 

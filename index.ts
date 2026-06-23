@@ -1,12 +1,14 @@
 import { Context, PRIV } from 'hydrooj';
 import { applyBlog } from './features/blog';
 import { applyTyping } from './features/typing';
+import { applyCoinget } from './features/coinget';
 import { PublicFileHandler } from './utils/public';
 
 export async function apply(ctx: Context) {
-  // 各機能のルートを登録
   applyBlog(ctx);
   applyTyping(ctx);
+  // コインゲットモード + 管理者画面のルートを登録
+  applyCoinget(ctx);
 
   // FIX: koa-static-cache が自動登録する /public/ パスと競合するため /typing-assets/ に変更し
   // 自前の Cache-Control: no-cache ハンドラが確実にリクエストを処理できるようにする
